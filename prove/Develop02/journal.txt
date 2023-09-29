@@ -1,0 +1,95 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        List<string> journalEntries = new List<string>();
+        int prompt_index = 0;
+
+        while (true)
+        {
+            Console.WriteLine("Please select one of the following choices");
+            Console.WriteLine("1.Write");
+            Console.WriteLine("2.Display");
+            Console.WriteLine("4.Save");
+            Console.WriteLine("5.Quit");
+            Console.WriteLine("What would you like to do?");
+
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case "1":
+                    DateTime theCurrentTime = DateTime.Now;
+                    string dateText = theCurrentTime.ToShortDateString();
+
+                    // 你的疑問提示詞
+                    string[] prompts = new string[]
+                    {
+                        "誰是我今天互動的最有趣的人？",
+                        "我一天中最美好的時光是什麼？",
+                        "我今天如何在我的生命中看到主的手？",
+                        "我今天感受到的最強烈的情緒是什麼？",
+                        "如果我今天有一件事可以做，那會是什麼？"
+                    };
+
+                    if (prompt_index >= prompts.Length)
+                    {
+                        prompt_index = 0;
+                    }
+
+                    string prompt = prompts[prompt_index];
+
+                    Console.WriteLine(prompt);
+                    string answer = Console.ReadLine();
+                    
+                    // 儲存日記條目
+                    string entry2 = $"Date:{dateText} - Prompt:{prompt}\n{answer}";
+                    journalEntries.Add(entry2);
+                    Console.WriteLine("Already added\n");
+                    prompt_index ++;
+                    break;
+                case "2":
+                    Console.WriteLine("Display all items：");
+                    for (int i = 0; i < journalEntries.Count; i++)
+                    {
+                        Console.WriteLine($"{journalEntries[i]}\n");
+                    }
+                    Console.WriteLine();
+                    break;
+                case "4":
+                    SaveJournalEntries(journalEntries);
+                    break;
+                case "5":
+                    Console.WriteLine("Already Quit!");
+                    return;
+                default:
+                    Console.WriteLine("Invalid selection, please re-enter。\n");
+                    break;
+            }
+        }
+    }
+
+    static void SaveJournalEntries(List<string> entries)
+    {
+        string fileName = "journal.txt";
+        try
+        {
+            using (StreamWriter writer = new StreamWriter(fileName))
+            {
+                foreach (string entry in entries)
+                {
+                    writer.WriteLine(entry);
+                }
+            }
+            Console.WriteLine($"日記已保存到 {fileName} 文件中。");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"保存日記時出現錯誤：{e.Message}");
+        }
+    }
+}
