@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml.Serialization;
 
 class Program
 {
@@ -11,11 +9,12 @@ class Program
     {
         // Design Requirements
         Choice choice = new Choice();
-        Record myRecord = new Record();
+        Journal myJournal = new Journal();
         string _choice = "0";
         string myFileName;
         string fileName = ""; 
-
+        string myEntryToDelete;
+        
         while (_choice != "5")
         {
             choice.ShowOptions();
@@ -26,13 +25,14 @@ class Program
                 // choice 1. Write
                 case "1":
                 {
-                    myRecord.getRecord();
+                    myJournal.WriteNewEntry();
+                    Console.WriteLine("Do you want to keep this entry? If yes, plese choose 4 to save.\n");
                     break;
                 }
                 // choice 2. Display
                 case "2":
                 {                
-                    myRecord.display();
+                    myJournal.displayEntries();
                     break;
                 }
                 // choice 3. Load  
@@ -41,29 +41,31 @@ class Program
                 {
                     Console.WriteLine("What is the filename? ");
                     myFileName = Console.ReadLine() + ".txt";
-                    string[] lines = System.IO.File.ReadAllLines(myFileName);
-
-                    foreach (string line in lines)
-                    {
-                        string[] parts = line.Split(",");
-                        foreach (string part in parts)
-                        {
-                            Console.WriteLine(part);
-                        }
-                    }
+                    // myJournal.ExistingEntries.saveToExisting();
+                    myJournal.displayExistingEntries(myFileName);
                     break;
                 }
                 // choice 4. Save  
                 // Save the text in a file
                 case "4":
                 {
-                    myRecord.SaveJournalEntries(fileName);
+                    myJournal.SaveJournalEntries(fileName);
                     break;
                 }
                 // choice 5. Quit 
                 case "5":
                 {
                     Console.WriteLine("Already Quit!");
+                    break;
+                }
+                // choice 6. delete 
+                case "6":
+                {
+                    Console.WriteLine("What is the filename that you want to modify? ");
+                    myFileName = Console.ReadLine() + ".txt";
+                    Console.WriteLine("What is the keyword in the line you want to delete? ");
+                    myEntryToDelete =  Console.ReadLine();
+                    myJournal.DeleteEntryFromFile(myFileName, myEntryToDelete);
                     break;
                 }
         
@@ -82,64 +84,148 @@ class Program
             Console.WriteLine("3. Load");
             Console.WriteLine("4. Save");
             Console.WriteLine("5. Quit");
+            Console.WriteLine("6. Delete");
             Console.Write("What would you like to do? ");    
         } 
         
     }
-    public class Record
+    //get the journal entry
+    public class Entry
     {
-        DateTime theCurrentTime = DateTime.Now;
-        string dateText;
-        int prompt_index = 0;
-        public List<string> journalEntries = new List<string>();
-        public string[] prompts = new string[]
+        public DateTime Date { get; set; }
+        public string Prompt { get; set; }
+        public string Response { get; set; }
+        public string  formattedEntry()
         {
-            "Who was the most interesting person I interacted with today? ",
-            "What was the best part of my day? ",
-            "How did I see the hand of the Lord in my life today? ",
-            "What was the strongest emotion I felt today? ",
-            "If I had one thing I could do over today, what would it be? "
-        };  
-        public void getRecord()
-        {
-            //The index will run from 0 to 4, when the index is over or equal to 5, make it return to zero
-            if (prompt_index >= prompts.Length)  
-            {
-                prompt_index = 0;
-            }     
-            //save the text of each prompt
-            string prompt = prompts[prompt_index];
-            Console.WriteLine(prompt);
-            //save the answer
-            string answer = Console.ReadLine();
-            //get the current datetime and swith it to string
-            dateText  = theCurrentTime.ToShortDateString();
-            
-            // save the record
-            string journal = $"{dateText}- Prompt: {prompt} {answer} "; 
-            journalEntries.Add(journal);
-            prompt_index ++;    
-        }
+            string _formattedEntry= $"{Date.ToShortDateString()} - Prompt: {Prompt} {Response}\n";
+            return _formattedEntry;
+        } 
+    }
+    public class ExistingEntry
+    {
+        public List<string> existingEntries = new List<string>();
+        public string FileName { get; set; }
 
-        public void display()
+        //set an intialized value to Filename
+        public ExistingEntry(string fileName)
         {
-            Console.WriteLine("Display all journals：");    
-            for (int i = 0; i < journalEntries.Count; i++)
+            FileName = fileName;
+        }
+    }
+    public class Journal
+    {
+        //creat a list to store all entries
+        public List<Entry> Entries = new List<Entry>();
+        public ExistingEntry ExistingEntries { get; } = new ExistingEntry("your_filename.txt");
+        public void WriteNewEntry()
+        {
+            // randomly choose a prompt
+            string[] prompts = new string[]
             {
-                Console.WriteLine($"{journalEntries[i]}\n"); // \n換行
+                "Who was the most interesting person you interacted with today?",
+                "What was the best part of your day?",
+                "How did you see the hand of the Lord in your life today?",
+                "What was the strongest emotion you felt today?",
+                "If you could do one thing over today, what would it be?"
+            };
+
+            Random random = new Random();
+            string randomPrompt = prompts[random.Next(prompts.Length)];
+
+            // show the prompt and let the users type their response
+            Console.WriteLine(randomPrompt);
+            string response = Console.ReadLine();
+
+            // creat a new entry and add them to the journal
+            Entry newEntry = new Entry
+            {
+                Date = DateTime.Now,
+                Prompt = randomPrompt,
+                Response = response
+            };
+
+            Entries.Add(newEntry);
+            Console.WriteLine("Entry saved successfully.");
+        }  
+        public void displayEntries()
+        {        
+            Console.WriteLine("Display all journals：");    
+            foreach (Entry entry in Entries)
+            {
+                string formatted = entry.formattedEntry();
+                Console.WriteLine($"{formatted}\n");
+            }
+        } 
+        public void displayExistingEntries(string FileName)
+        {
+            
+            Console.WriteLine("Display all journals from " + FileName + "：");  
+            string[] lines = System.IO.File.ReadAllLines(FileName);
+            foreach (string entry in lines)
+            {
+                string[] parts = entry.Split(",");
+                foreach (string part in parts)
+                {
+                    Console.WriteLine(part);
+                }
+                // 將舊檔資料新增到 ExistingEntries 中
+                ExistingEntries.existingEntries.Add(entry);
             }
         }
         public void SaveJournalEntries(string fileName)
         {
-            Console.WriteLine("What is the filename? ");
-            fileName = Console.ReadLine() + ".txt";
-            using (StreamWriter outputFile = new StreamWriter(fileName))               
-            // You can use the $ and include variables just like with Console.WriteLine
-            for (int i = 0; i < journalEntries.Count; i++)
+            // check if the user type a filename, if not, ask to type one.
+            if (string.IsNullOrEmpty(fileName))
             {
-                outputFile.WriteLine($"{journalEntries[i]}");
+                Console.WriteLine("What is the filename? ");
+                fileName = Console.ReadLine() + ".txt";
+            }
+
+            // Open the file in append mode, create it if it doesn't exist.
+            using (StreamWriter outputFile = new StreamWriter(fileName, true)) // 使用 true 參數表示追加模式
+            {
+                // Write new entries into the file
+                foreach (Entry entry in Entries)
+                {
+                    string formatted = entry.formattedEntry();
+                    outputFile.WriteLine(formatted);
+                }
+            }
+            Console.WriteLine("Entries saved successfully in " + fileName);
+        }
+        public void DeleteEntryFromFile(string fileName, string entryToDelete)
+        {
+            // read file into memory
+            List<string> fileContents = File.ReadAllLines(fileName).ToList();
+
+            // seek the data we want to delete is in which line 
+            int indexToDelete = -1;
+            for (int i = 0; i < fileContents.Count; i++)
+            {
+                string line = fileContents[i];
+                if (fileContents[i].Contains(entryToDelete))
+                {
+                    indexToDelete = i;
+                    if (!string.IsNullOrWhiteSpace(line))
+                    {
+                        // 刪除非空白行的前後空白
+                        fileContents[i] = line.Trim();
+                    }
+                    break;                                    
+                }
+            }
+            if (indexToDelete != -1)
+            {
+                // 移除找到的行
+                fileContents.RemoveAt(indexToDelete);
+                // update the data and rewrite to the file
+                File.WriteAllLines(fileName, fileContents);
+                Console.WriteLine("Entry deleted successfully.");
+            }
+            else
+            {
+                Console.WriteLine("Entry not found in the file.");
             }
         }
-
     }
 }
