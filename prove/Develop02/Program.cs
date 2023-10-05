@@ -11,9 +11,9 @@ class Program
         Choice choice = new Choice();
         Journal myJournal = new Journal();
         string _choice = "0";
-        string myFileName;
-        string fileName = ""; 
-        string myEntryToDelete;
+        string _myFileName;
+        string _fileName = ""; 
+        string _myEntryToDelete;
         
         while (_choice != "5")
         {
@@ -40,16 +40,16 @@ class Program
                 case "3":
                 {
                     Console.WriteLine("What is the filename? ");
-                    myFileName = Console.ReadLine() + ".txt";
+                    _myFileName = Console.ReadLine() + ".txt";
                     // myJournal.ExistingEntries.saveToExisting();
-                    myJournal.displayExistingEntries(myFileName);
+                    myJournal.displayExistingEntries(_myFileName);
                     break;
                 }
                 // choice 4. Save  
                 // Save the text in a file
                 case "4":
                 {
-                    myJournal.SaveJournalEntries(fileName);
+                    myJournal.SaveJournalEntries(_fileName);
                     break;
                 }
                 // choice 5. Quit 
@@ -62,10 +62,10 @@ class Program
                 case "6":
                 {
                     Console.WriteLine("What is the filename that you want to modify? ");
-                    myFileName = Console.ReadLine() + ".txt";
+                    _myFileName = Console.ReadLine() + ".txt";
                     Console.WriteLine("What is the keyword in the line you want to delete? ");
-                    myEntryToDelete =  Console.ReadLine();
-                    myJournal.DeleteEntryFromFile(myFileName, myEntryToDelete);
+                    _myEntryToDelete =  Console.ReadLine();
+                    myJournal.DeleteEntryFromFile(_myFileName, _myEntryToDelete);
                     break;
                 }
         
@@ -92,35 +92,35 @@ class Program
     //get the journal entry
     public class Entry
     {
-        public DateTime Date { get; set; }
-        public string Prompt { get; set; }
-        public string Response { get; set; }
+        public DateTime _Date { get; set; }
+        public string _Prompt { get; set; }
+        public string _Response { get; set; }
         public string  formattedEntry()
         {
-            string _formattedEntry= $"{Date.ToShortDateString()} - Prompt: {Prompt} {Response}\n";
+            string _formattedEntry= $"{_Date.ToShortDateString()} - Prompt: {_Prompt} {_Response}\n";
             return _formattedEntry;
         } 
     }
     public class ExistingEntry
     {
-        public List<string> existingEntries = new List<string>();
-        public string FileName { get; set; }
+        public List<string> _existingEntries = new List<string>();
+        public string _FileName { get; set; }
 
         //set an intialized value to Filename
-        public ExistingEntry(string fileName)
+        public ExistingEntry(string _fileName)
         {
-            FileName = fileName;
+            _FileName = _fileName;
         }
     }
     public class Journal
     {
         //creat a list to store all entries
-        public List<Entry> Entries = new List<Entry>();
-        public ExistingEntry ExistingEntries { get; } = new ExistingEntry("your_filename.txt");
+        public List<Entry> _Entries = new List<Entry>();
+        public ExistingEntry _ExistingEntries { get; } = new ExistingEntry("your_filename.txt");
         public void WriteNewEntry()
         {
             // randomly choose a prompt
-            string[] prompts = new string[]
+            string[] _prompts = new string[]
             {
                 "Who was the most interesting person you interacted with today?",
                 "What was the best part of your day?",
@@ -129,87 +129,87 @@ class Program
                 "If you could do one thing over today, what would it be?"
             };
 
-            Random random = new Random();
-            string randomPrompt = prompts[random.Next(prompts.Length)];
+            Random _random = new Random();
+            string _randomPrompt = _prompts[_random.Next(_prompts.Length)];
 
             // show the prompt and let the users type their response
-            Console.WriteLine(randomPrompt);
-            string response = Console.ReadLine();
+            Console.WriteLine(_randomPrompt);
+            string _response = Console.ReadLine();
 
             // creat a new entry and add them to the journal
-            Entry newEntry = new Entry
+            Entry _newEntry = new Entry
             {
-                Date = DateTime.Now,
-                Prompt = randomPrompt,
-                Response = response
+                _Date = DateTime.Now,
+                _Prompt = _randomPrompt,
+                _Response = _response
             };
 
-            Entries.Add(newEntry);
+            _Entries.Add(_newEntry);
             Console.WriteLine("Entry saved successfully.");
         }  
         public void displayEntries()
         {        
             Console.WriteLine("Display all journals：");    
-            foreach (Entry entry in Entries)
+            foreach (Entry entry in _Entries)
             {
-                string formatted = entry.formattedEntry();
-                Console.WriteLine($"{formatted}\n");
+                string _formatted = entry.formattedEntry();
+                Console.WriteLine($"{_formatted}\n");
             }
         } 
-        public void displayExistingEntries(string FileName)
+        public void displayExistingEntries(string _FileName)
         {
             
-            Console.WriteLine("Display all journals from " + FileName + "：");  
-            string[] lines = System.IO.File.ReadAllLines(FileName);
-            foreach (string entry in lines)
+            Console.WriteLine("Display all journals from " + _FileName + "：");  
+            string[] _lines = System.IO.File.ReadAllLines(_FileName);
+            foreach (string entry in _lines)
             {
-                string[] parts = entry.Split(",");
-                foreach (string part in parts)
+                string[] _parts = entry.Split(",");
+                foreach (string part in _parts)
                 {
                     Console.WriteLine(part);
                 }
                 // 將舊檔資料新增到 ExistingEntries 中
-                ExistingEntries.existingEntries.Add(entry);
+                _ExistingEntries._existingEntries.Add(entry);
             }
         }
-        public void SaveJournalEntries(string fileName)
+        public void SaveJournalEntries(string _fileName)
         {
             // check if the user type a filename, if not, ask to type one.
-            if (string.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(_fileName))
             {
                 Console.WriteLine("What is the filename? ");
-                fileName = Console.ReadLine() + ".txt";
+                _fileName = Console.ReadLine() + ".txt";
             }
 
             // Open the file in append mode, create it if it doesn't exist.
-            using (StreamWriter outputFile = new StreamWriter(fileName, true)) // 使用 true 參數表示追加模式
+            using (StreamWriter outputFile = new StreamWriter(_fileName, true)) // 使用 true 參數表示追加模式
             {
                 // Write new entries into the file
-                foreach (Entry entry in Entries)
+                foreach (Entry entry in _Entries)
                 {
-                    string formatted = entry.formattedEntry();
-                    outputFile.WriteLine(formatted);
+                    string _formatted = entry.formattedEntry();
+                    outputFile.WriteLine(_formatted);
                 }
             }
-            Console.WriteLine("Entries saved successfully in " + fileName);
+            Console.WriteLine("Entries saved successfully in " + _fileName);
         }
-        public void DeleteEntryFromFile(string fileName, string entryToDelete)
+        public void DeleteEntryFromFile(string _fileName, string _entryToDelete)
         {
             // read file into memory
-            List<string> fileContents = File.ReadAllLines(fileName).ToList();
+            List<string> _fileContents = File.ReadAllLines(_fileName).ToList();
 
             // seek the data we want to delete is in which line 
             int indexToDelete = -1;
-            for (int i = 0; i < fileContents.Count; i++)
+            for (int i = 0; i < _fileContents.Count; i++)
             {
-                string line = fileContents[i];
-                if (fileContents[i].Contains(entryToDelete))
+                string line = _fileContents[i];
+                if (_fileContents[i].Contains(_entryToDelete))
                 {
                     indexToDelete = i;
                     if (!string.IsNullOrWhiteSpace(line))
                     {
                         // 刪除非空白行的前後空白
-                        fileContents[i] = line.Trim();
+                        _fileContents[i] = line.Trim();
                     }
                     break;                                    
                 }
@@ -217,9 +217,9 @@ class Program
             if (indexToDelete != -1)
             {
                 // 移除找到的行
-                fileContents.RemoveAt(indexToDelete);
+                _fileContents.RemoveAt(indexToDelete);
                 // update the data and rewrite to the file
-                File.WriteAllLines(fileName, fileContents);
+                File.WriteAllLines(_fileName, _fileContents);
                 Console.WriteLine("Entry deleted successfully.");
             }
             else
