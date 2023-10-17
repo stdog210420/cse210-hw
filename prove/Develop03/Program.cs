@@ -5,24 +5,28 @@ class Program
 {
     static void Main(string[] args)
     {
-        string scriptureInput = "Proverbs 3:5-6: Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.";
-        var _reference = new Reference("Proverbs 3:5-6");
+        var _reference = new Reference();
         var _words = scriptureInput.Split("").Select(w => new Word(w)).ToList();
         var scripture = new Scripture (_reference, _words);
         Console.Clear();
         DisplayScripture(scripture);
 
         Console.WriteLine("\nPress Enter to hide more words or type 'quit' to exit.");
+        string input = Console.ReadLine();
 
-        while (scripture.HasHiddenWords())
+        while (scripture.HasHiddenWords() && input !="quit")
         {
-            Console.WriteLine("\nPress Enter to hide more words or type 'quit' to exit.");
-            string input = Console.ReadLine();
-            if (input == "quit")
-                break;
-            scripture.HideRandomWord();
-            Console.Clear();
-            DisplayScripture(scripture);
+            if (input == "")
+            {
+                scripture.HideRandomWord();
+                Console.Clear();
+                DisplayScripture(scripture);
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Press Enter to hide more words or type 'quit' to exit.");
+            }
+            input = Console.ReadLine();
         }
         static void DisplayScripture(Scripture scripture)
         {

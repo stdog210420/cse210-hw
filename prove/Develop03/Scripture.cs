@@ -1,10 +1,11 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Linq;
+using System.Formats.Asn1;
 
 class Scripture
 {
-    private Reference _reference;
+    public Reference _reference;
     private List<Word> _words;
 
     //This code will return true if it finds any hidden word and false if none of the words are hidden.
@@ -22,11 +23,14 @@ class Scripture
         return false; //If no word is hidden, return false. 
         
     }
-    public Scripture(Reference reference, List<Word> words)
+    public Scripture(Reference _reference, List<Word> _words)
     {
-        _reference = reference;
-        _words = words;
+        string text ="Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."; 
+        _reference.ReferenceDisplay("Proverbs", 3, 5, 6 );  // Example: "Proverbs 3:5-6"
+        _words = text.Split("").Select(w => new Word(w)).ToList(); // Store words in a List
+        return $"{_reference.ReferenceDisplay} {_words}";
     }
+
     public void HideRandomWord()
     {
         Random random = new Random();
