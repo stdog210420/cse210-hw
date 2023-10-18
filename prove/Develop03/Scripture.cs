@@ -5,9 +5,16 @@ using System.Formats.Asn1;
 
 class Scripture
 {
-    public Reference _reference;
+    private Reference _reference;
     private List<Word> _words;
 
+    public Scripture()
+    {   
+        // Example: "Proverbs 3:5-6"
+        Reference _reference = new Reference("Proverbs", 3, 5 ,6);
+        string text = "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."; 
+        _words = text.Split(" ").Select(text => new Word(text)).ToList();
+    }
     //This code will return true if it finds any hidden word and false if none of the words are hidden.
     public bool HasHiddenWords()
     {
@@ -23,13 +30,6 @@ class Scripture
         return false; //If no word is hidden, return false. 
         
     }
-    public Scripture(Reference _reference, List<Word> _words)
-    {
-        string text ="Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."; 
-        _reference.ReferenceDisplay("Proverbs", 3, 5, 6 );  // Example: "Proverbs 3:5-6"
-        _words = text.Split("").Select(w => new Word(w)).ToList(); // Store words in a List
-        return $"{_reference.ReferenceDisplay} {_words}";
-    }
 
     public void HideRandomWord()
     {
@@ -41,11 +41,7 @@ class Scripture
         }
         while (_words[index]._hidden);
         _words[index].Hide();
-    }
-    public string Render()
-    {
-        return $"{_reference}: {string.Join("",_words.Select(word => word.Render()))}";
-    }
-    
+        Console.WriteLine($"{_words[index].Render()}");
+    }    
 
 }

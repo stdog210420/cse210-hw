@@ -4,12 +4,12 @@ using System.Linq;
 
 class Word
 {
-    public string _word;
+    private string _word;
     public bool _hidden;
 
-    public Word(string word)
+    public Word(string Text)
     {
-        _word = word;
+        _word = Text;
         _hidden = false;
     }
     // modify the Hide method to return a bool
@@ -21,10 +21,10 @@ class Word
     {   //checks if _hidden is true
         if (_hidden)
         {
-            //If _hidden is true, it returns a string of underscores ('_') of the same length as _word. 
+            //If _hidden is true, it returns a string of underscores ('_') of the same length as Text. 
             return new string ('_', _word.Length);
         }
-        //If _hidden is false, it returns the original _word.
+        //If _hidden is false, it returns the original Text.
         return _word;
     }
 }

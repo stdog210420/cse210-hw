@@ -5,11 +5,9 @@ class Program
 {
     static void Main(string[] args)
     {
-        var _reference = new Reference();
-        var _words = scriptureInput.Split("").Select(w => new Word(w)).ToList();
-        var scripture = new Scripture (_reference, _words);
+        Scripture scripture = new Scripture ();
         Console.Clear();
-        DisplayScripture(scripture);
+        scripture.HideRandomWord();
 
         Console.WriteLine("\nPress Enter to hide more words or type 'quit' to exit.");
         string input = Console.ReadLine();
@@ -20,7 +18,6 @@ class Program
             {
                 scripture.HideRandomWord();
                 Console.Clear();
-                DisplayScripture(scripture);
             }
             else
             {
@@ -28,10 +25,7 @@ class Program
             }
             input = Console.ReadLine();
         }
-        static void DisplayScripture(Scripture scripture)
-        {
-            Console.WriteLine(scripture.Render());
-        }
+
     }
 }
 
