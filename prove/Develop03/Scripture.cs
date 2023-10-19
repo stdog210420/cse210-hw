@@ -25,30 +25,21 @@ class Scripture
     public void HideRandomWord()
     {
         Random random = new Random();
-        List<Word> hiddenWords;
-        int index;
-        do
+        if (_words.All(word => word._hidden_hidden))
         {
+            Console.WriteLine("All words are hiddden.");
+            return;
+        }
+        int index;
+        do{
             index = random.Next(_words.Count);
-            Console.WriteLine(index);
         }
         while (_words[index]._hidden);
-        {
-            _words[index].Hide();
-            hiddenWords = _words[index].Hide();
-        }
-        if (hiddenWords.Count == _words.Count)
-        {
-            // if all words are hidden, than stop.
-            Console.WriteLine("All words are hidden.");
-            return;
-        }  
-
-        
+        _words[index].Hide();        
     }
-        public string Render()
-    {   
-        return $"{_reference}: {string.Join(" ", hiddenWords.Select(word => word.Render()))}";
+    public string Render()
+    {
+        return $"{_reference}: {string.Join(" ", _words.Select(word => word.Render()))}";
     }
 
 }
