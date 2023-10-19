@@ -22,20 +22,23 @@ class Scripture
         return _words.Any(word => word._hidden);
     }
 
-    public void HideRandomWord()
+    public void HideRandomWord(int _wordsToHide)
     {
         Random random = new Random();
-        if (_words.All(word => word._hidden_hidden))
+        if (_words.All(word => word._hidden))
         {
             Console.WriteLine("All words are hiddden.");
             return;
         }
-        int index;
-        do{
-            index = random.Next(_words.Count);
+        for (int i = 0; i< _wordsToHide ; i++)
+        {
+            int index;         
+            do{
+                index = random.Next(_words.Count);
+            }
+            while (_words[index]._hidden);
+            _words[index].Hide(); 
         }
-        while (_words[index]._hidden);
-        _words[index].Hide();        
     }
     public string Render()
     {

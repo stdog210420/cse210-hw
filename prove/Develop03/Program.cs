@@ -20,10 +20,11 @@ class Program
         {
             if (input == "")
             {
-                scripture.HideRandomWord();
+                scripture.HideRandomWord(_wordsToHide);
+                _wordsToHide ++;
                 Console.Clear();
                 Console.WriteLine(scripture.Render());
-                _wordsToHide ++;
+                
             }
             else
             {
