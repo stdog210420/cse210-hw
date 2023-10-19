@@ -4,10 +4,10 @@ using System.Linq;
 
 class Reference
 {
-    private string _book { get; set; }
-    private int _chapter { get; set; }
-    private int _verseStart { get; set; }
-    private int _verseEnd { get; set; }
+    private string _book { get; }
+    private int _chapter { get;}
+    private int _verseStart { get;}
+    private int _verseEnd { get;}
     public  Reference(string Book, int Chapter, int VerseStart, int VerseEnd)
     {
         // Parse the reference value and initialize _book, _chapter, _verseStart, and _verseEnd

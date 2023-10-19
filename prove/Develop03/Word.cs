@@ -4,8 +4,8 @@ using System.Linq;
 
 class Word
 {
-    private string _word;
-    public bool _hidden;
+    public string _word{get;}
+    public bool _hidden{get; set;}
 
     public Word(string Text)
     {
@@ -13,9 +13,14 @@ class Word
         _hidden = false;
     }
     // modify the Hide method to return a bool
-    public void Hide()
+    public bool Hide()
     {
-        _hidden = true;
+        if (!_hidden)
+        {
+            _hidden = true;
+            return true;
+        }
+        return false;
     }
     public string Render()
     {   //checks if _hidden is true

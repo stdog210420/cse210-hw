@@ -2,46 +2,53 @@ using System;
 using System.Text.RegularExpressions;
 using System.Linq;
 using System.Formats.Asn1;
+using System.Dynamic;
+using System.Reflection.Metadata.Ecma335;
 
 class Scripture
 {
-    private Reference _reference;
-    private List<Word> _words;
+    private Reference _reference { get;}
+    private List<Word> _words{ get; }
 
-    public Scripture()
+    public Scripture(string text)
     {   
         // Example: "Proverbs 3:5-6"
-        Reference _reference = new Reference("Proverbs", 3, 5 ,6);
-        string text = "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight."; 
+        _reference = new Reference("Proverbs", 3, 5 ,6);
         _words = text.Split(" ").Select(text => new Word(text)).ToList();
     }
     //This code will return true if it finds any hidden word and false if none of the words are hidden.
     public bool HasHiddenWords()
     {
-
-        foreach (Word word in _words)
-        {
-            if (word._hidden) // modify the Hide method to return a bool
-            {
-                return true; // If any word is hidden, return true.
-            }         
-        }
-        //return false; statement should be outside the loop, so it only returns false if none of the words are hidden. 
-        return false; //If no word is hidden, return false. 
-        
+        return _words.Any(word => word._hidden);
     }
 
     public void HideRandomWord()
     {
         Random random = new Random();
+        List<Word> hiddenWords;
         int index;
         do
         {
             index = random.Next(_words.Count);
+            Console.WriteLine(index);
         }
         while (_words[index]._hidden);
-        _words[index].Hide();
-        Console.WriteLine($"{_words[index].Render()}");
-    }    
+        {
+            _words[index].Hide();
+            hiddenWords = _words[index].Hide();
+        }
+        if (hiddenWords.Count == _words.Count)
+        {
+            // if all words are hidden, than stop.
+            Console.WriteLine("All words are hidden.");
+            return;
+        }  
+
+        
+    }
+        public string Render()
+    {   
+        return $"{_reference}: {string.Join(" ", hiddenWords.Select(word => word.Render()))}";
+    }
 
 }
