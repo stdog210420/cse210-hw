@@ -7,28 +7,32 @@ using System.Reflection.Metadata.Ecma335;
 
 class Scripture
 {
-    private Reference _reference { get;}
-    private List<Word> _words{ get; }
+    public Reference _reference{ get; set; }
+    public List<Word> _words{ get; set; }
+    public int _wordsToHide;
 
-    public Scripture(string text)
+    public Scripture(Reference _reference, string text)
     {   
-        // Example: "Proverbs 3:5-6"
-        _reference = new Reference("Proverbs", 3, 5 ,6);
-        _words = text.Split(" ").Select(text => new Word(text)).ToList();
+        // initialized _reference
+        _words = text.Split(" ").Select(wordtext => new Word(wordtext)).ToList();
+
     }
     //This code will return true if it finds any hidden word and false if none of the words are hidden.
+
     public bool HasHiddenWords()
     {
         return _words.Any(word => word._hidden);
     }
 
-    public void HideRandomWord(int _wordsToHide)
+    public int HideRandomWord()
     {
         Random random = new Random();
-        if (_words.All(word => word._hidden))
+        List<Word> hiddenWords = _words.Where(word => word._hidden).ToList();
+
+        if (hiddenWords.Count == _words.Count)
         {
             Console.WriteLine("All words are hiddden.");
-            return;
+            return _wordsToHide;
         }
         for (int i = 0; i< _wordsToHide ; i++)
         {
@@ -39,6 +43,7 @@ class Scripture
             while (_words[index]._hidden);
             _words[index].Hide(); 
         }
+        return _wordsToHide + 1; 
     }
     public string Render()
     {

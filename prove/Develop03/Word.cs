@@ -4,7 +4,7 @@ using System.Linq;
 
 class Word
 {
-    public string _word{get;}
+    public string _word{get; set;}
     public bool _hidden{get; set;}
 
     public Word(string Text)
@@ -26,6 +26,7 @@ class Word
     {   //checks if _hidden is true
         if (_hidden)
         {
+            // Console.WriteLine(_word.Length);
             //If _hidden is true, it returns a string of underscores ('_') of the same length as Text. 
             return new string ('_', _word.Length);
         }

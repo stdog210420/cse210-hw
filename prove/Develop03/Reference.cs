@@ -1,7 +1,6 @@
 using System;
 using System.Text.RegularExpressions;
 using System.Linq;
-
 class Reference
 {
     private string _book { get; }
@@ -28,7 +27,5 @@ class Reference
         {
             return  $"{_book} {_chapter}:{_verseStart}-{_verseEnd}";
         }
-    }
-        
-
+    } 
 }
