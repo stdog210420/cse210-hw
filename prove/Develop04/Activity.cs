@@ -48,6 +48,11 @@ class Activity
         Waiting();
         Console.WriteLine();
     }
+
+    public int Duration
+    {
+        get { return _duration; }
+    }
     public void Waiting()
     {
         for (int i = 3; i>0 ; i--)
@@ -78,6 +83,8 @@ class Activity
         Thread.Sleep(1000);
         // Change text color back to the default (usually white)
         Console.ResetColor();
+        //Ater finishing the activity, update the value of _duration
+        _duration += _duration;
     }
 
 }

@@ -11,7 +11,8 @@ class Program
         Reflection myReflection = new Reflection();
         Listing myListing = new Listing();
         string  _choice = "0";
-        
+        int i = 0; int j = 0; int k =0;
+
         while (_choice != "4")
         {
             activity.ActivityOptions();
@@ -23,18 +24,21 @@ class Program
                 case "1":
                 {
                     myBreathing.BreathingActivity();
+                    i ++;
                     break;
                 }
                 // choice 2. Reflection Activity
                 case "2":
                 {                
                     myReflection.ReflectionActivity();
+                    j ++;
                     break;
                 }
                 // choice 3. Listing Activity  
                 case "3":
                 {
                     myListing.ListingActivity();
+                    k ++;
                     break;
                 }
                 // choice 4. Quit  
@@ -46,5 +50,10 @@ class Program
                 }
             }
         }
+        Console.WriteLine($"\nToday's Activity Statistics:\n");
+        Console.WriteLine($"Breathing activity: {i} 次, totoal duration: {activity.Duration} seconds");
+        Console.WriteLine($"Reflection activity: {j} 次, totoal duration: {activity.Duration} seconds");
+        Console.WriteLine($"Listing activity: {k} 次, totoal duration: {activity.Duration} seconds");
+
     }
 }
