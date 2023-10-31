@@ -2,7 +2,7 @@ class Reflection:Activity
 {
     private string _activity = "Reflection";
     private string _text = "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.";
-
+    public int _sumDuration =0; 
     public void ReflectionActivity()
     {
         Message(_activity, _text);
@@ -29,7 +29,7 @@ class Reflection:Activity
         };
         Random _random = new Random();
         DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_duration);
+        DateTime endTime = startTime.AddSeconds(_Duration);
         while (DateTime.Now < endTime)
         {
             string _randomPrompt = _prompts[_random.Next(_prompts.Length)];
@@ -41,7 +41,7 @@ class Reflection:Activity
             int i = 0;
             while ( input =="" && DateTime.Now < endTime)
             {
-                string _randomQuestion = _questions[_random.Next(_prompts.Length)];
+                string _randomQuestion = _questions[_random.Next(_questions.Length)];
                 Console.WriteLine($">{_randomQuestion}");
                 foreach (string s in animationStrings)
                 {
@@ -59,6 +59,6 @@ class Reflection:Activity
         }
 
         Done(_activity);
-    
+        _sumDuration += _Duration;    
     }
 }

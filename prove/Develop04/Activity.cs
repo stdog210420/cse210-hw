@@ -3,7 +3,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
 class Activity
 {
-    public int _duration;
+    private int _duration;
+
     private List<string> _animationStrings = new List<string>
     {
         "|", "/", "-", "\\",
@@ -13,19 +14,9 @@ class Activity
     {
         get { return _animationStrings; }
     }
-        // animationStrings = new List<string>
-        // public List<string> animationStrings = list;
-        // animationStrings.Add("|");
-        // animationStrings.Add("/");
-        // animationStrings.Add("-");
-        // animationStrings.Add("\\");
-        // animationStrings.Add("|");
-        // animationStrings.Add("/");
-        // animationStrings.Add("-");
-        // animationStrings.Add("\\");
-
     public void ActivityOptions()
-    {   Console.ForegroundColor = ConsoleColor.Blue;    
+    {   
+        Console.ForegroundColor = ConsoleColor.Blue;    
         Console.WriteLine("Menu Options:");              
         Console.WriteLine("  1. Start breathing activity");
         Console.WriteLine("  2. Start reflecting activity");
@@ -49,10 +40,6 @@ class Activity
         Console.WriteLine();
     }
 
-    public int Duration
-    {
-        get { return _duration; }
-    }
     public void Waiting()
     {
         for (int i = 3; i>0 ; i--)
@@ -72,6 +59,11 @@ class Activity
             Console.Write("\b \b");
         }
     }
+    public int _Duration
+    {
+        get { return _duration; }
+        set { _duration = value; }       
+    }
     public void Done(string activity)
     {
         // Change text color to blue
@@ -84,7 +76,8 @@ class Activity
         // Change text color back to the default (usually white)
         Console.ResetColor();
         //Ater finishing the activity, update the value of _duration
-        _duration += _duration;
+        
     }
+
 
 }

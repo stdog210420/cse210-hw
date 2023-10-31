@@ -15,9 +15,10 @@ class Program
 
         while (_choice != "4")
         {
+
+            Console.ForegroundColor = ConsoleColor.Blue;            
             activity.ActivityOptions();
             _choice = Console.ReadLine();
-
             switch(_choice)
             {
                 // choice 1. Breathing Activity
@@ -25,6 +26,7 @@ class Program
                 {
                     myBreathing.BreathingActivity();
                     i ++;
+                    
                     break;
                 }
                 // choice 2. Reflection Activity
@@ -32,28 +34,31 @@ class Program
                 {                
                     myReflection.ReflectionActivity();
                     j ++;
+
                     break;
                 }
                 // choice 3. Listing Activity  
                 case "3":
                 {
                     myListing.ListingActivity();
-                    k ++;
+                    k ++;  
                     break;
                 }
                 // choice 4. Quit  
                 case "4":
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
+
                     Console.WriteLine("Already Quit!");
                     break;
                 }
             }
+
         }
         Console.WriteLine($"\nToday's Activity Statistics:\n");
-        Console.WriteLine($"Breathing activity: {i} 次, totoal duration: {activity.Duration} seconds");
-        Console.WriteLine($"Reflection activity: {j} 次, totoal duration: {activity.Duration} seconds");
-        Console.WriteLine($"Listing activity: {k} 次, totoal duration: {activity.Duration} seconds");
+        Console.WriteLine($"Breathing activity: {i} 次, totoal duration: {myBreathing._sumDuration} seconds");
+        Console.WriteLine($"Reflection activity: {j} 次, totoal duration: {myReflection._sumDuration} seconds");
+        Console.WriteLine($"Listing activity: {k} 次, totoal duration: {myListing._sumDuration} seconds");
 
     }
 }
