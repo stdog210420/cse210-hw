@@ -4,8 +4,8 @@ using System.Linq;
 
 class Word
 {
-    public string _word{ get; set; }
-    public bool _hidden{get; set;}
+    public string _word;
+    public bool _hidden;
 
     public Word(string Text)
     {
@@ -37,4 +37,29 @@ class Word
         //If _hidden is false, it returns the original Text.
         return _word;
     }
+
+    public bool Reveal()
+    {
+        //checks if the _hidden property of the Word object is currently true, which means the word is hidden.
+        if (_hidden)
+        {   //If the word is hidden, this line sets the _hidden property to false, indicating that the word is now unhidden.
+            _hidden = false;
+            //After successfully revealing the word, this line returns true to indicate that the revealing operation was successful.
+            return false;
+        }
+        return false;
+    }
+    public string revealRender()
+    { 
+    //This condition checks two things: 1.whether the _hidden property of the word is set to true
+    //2. If there are remaining words to hide (i.e., wordsToHide is greater than 0), the code proceeds to hide this word.
+        if (_hidden == false)
+        {
+            //If _hidden is false, it returns the original Text.
+            return _word;
+        }
+        return new string ('_', _word.Length);
+        
+    }
+
 }

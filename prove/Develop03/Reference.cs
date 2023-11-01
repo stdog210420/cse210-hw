@@ -3,10 +3,10 @@ using System.Text.RegularExpressions;
 using System.Linq;
 class Reference
 {
-    private string _book { get; }
-    private int _chapter { get;}
-    private int _verseStart { get;}
-    private int _verseEnd { get;}
+    private string _book;
+    private int _chapter;
+    private int _verseStart;
+    private int _verseEnd;
     public  Reference(string Book, int Chapter, int VerseStart, int VerseEnd)
     {
         // Parse the reference value and initialize _book, _chapter, _verseStart, and _verseEnd
