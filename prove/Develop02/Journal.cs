@@ -1,13 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
     public class Journal
     {
         //creat a list to store all entries
         public List<Entry> _Entries = new List<Entry>();
-
-        public List<string> _existingEntries = new List<string>();
         public string _FileName;
 
         //set an intialized value to Filename
-        public void ExistingEntry(string _fileName)
+        public void Entry(string _fileName)
         {
             _FileName = _fileName;
         }
@@ -41,7 +43,7 @@
             _Entries.Add(_newEntry);
             Console.WriteLine("Entry saved successfully.");
         }  
-        public void displayEntries()
+        public void display()
         {        
             Console.WriteLine("Display all journals：");    
             foreach (Entry entry in _Entries)
@@ -50,7 +52,7 @@
                 Console.WriteLine($"{_formatted}\n");
             }
         } 
-        public void displayExistingEntries(string _FileName)
+        public void displayEntries(string _FileName)
         {
             
             Console.WriteLine("Display all journals from " + _FileName + "：");  
@@ -63,7 +65,7 @@
                     Console.WriteLine(part);
                 }
                 // 將舊檔資料新增到 ExistingEntries 中
-                _existingEntries.Add(entry);
+                _Entries.Add(_lines);
             }
         }
         public void SaveJournalEntries(string _fileName)
