@@ -65,7 +65,7 @@ using System.IO;
                     Console.WriteLine(part);
                 }
                 // 將舊檔資料新增到 ExistingEntries 中
-                _Entries.Add(_lines);
+                // _Entries.Add(_lines);
             }
         }
         public void SaveJournalEntries(string _fileName)

@@ -59,6 +59,21 @@ class Activity
             Console.Write("\b \b");
         }
     }
+
+    public void Spinner(int interval =8 )
+    {
+        DateTime startTime = DateTime.Now;
+        DateTime endTime = startTime.AddSeconds(interval);
+        while (DateTime.Now < endTime)
+        {
+            foreach (string s in animationStrings)
+            {
+                Console.Write(s);
+                Thread.Sleep(500);
+                Console.Write("\b \b");
+            }
+        }
+    }
     public int _Duration
     {
         get { return _duration; }

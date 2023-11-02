@@ -43,12 +43,13 @@ class Reflection:Activity
             {
                 string _randomQuestion = _questions[_random.Next(_questions.Length)];
                 Console.WriteLine($">{_randomQuestion}");
-                foreach (string s in animationStrings)
-                {
-                    Console.Write(s);
-                    Thread.Sleep(1000);
-                    Console.Write("\b \b");
-                }
+                // foreach (string s in animationStrings)
+                // {
+                //     Console.Write(s);
+                //     Thread.Sleep(1000);
+                //     Console.Write("\b \b");
+                // }
+                Spinner();
                 i++ ;
                 if (i >= _questions.Length || i >= animationStrings.Count)
                 {
