@@ -2,7 +2,7 @@ class Listing:Activity
 {
     private string _activity = "Listing";
     private string _text = "This activity will help you reflect on the good things in your life by having you list as many things as you can in a certain area.";
-
+    public int _sumDuration =0; 
     public void ListingActivity()
     {
         Message(_activity, _text);
@@ -17,7 +17,7 @@ class Listing:Activity
             "---Who are some of your personal heroes?---",  
         };
         DateTime startTime = DateTime.Now;
-        DateTime endTime = startTime.AddSeconds(_duration);
+        DateTime endTime = startTime.AddSeconds(_Duration);
         int i = 0;
         while (DateTime.Now < endTime)
         {
@@ -48,6 +48,6 @@ class Listing:Activity
         Console.WriteLine($"You listed {i+1} items!");  
         }
         Done(_activity);
-    
+        _sumDuration += _Duration;    
     }
 }

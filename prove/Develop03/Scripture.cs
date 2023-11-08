@@ -7,8 +7,8 @@ using System.Reflection.Metadata.Ecma335;
 
 class Scripture
 {
-    public Reference _reference{ get; set; }
-    public List<Word> _words{ get; set; }
+    public Reference _reference;
+    public List<Word> _words;
 
     public Scripture(Reference reference, string text)
     {   
@@ -52,6 +52,35 @@ class Scripture
         //string.Join(" ", ...) is used to join the words together into a single string with spaces between them.
         //_words.Select(word => word.Render(wordsToHide)) It allows the Render method in the Word class to decide whether to display the word or hide it based on the value of wordsToHide.
         return $"{_reference}: {string.Join(" ", _words.Select(word => word.Render()))}";
+    }
+    public void revealRandomWord()
+    {   
+        //creates a Random object for generating random numbers
+        Random random = new Random(); 
+        //creates a list "unhiddenWords" that contains words from the _words list that havn't been hidden. 
+        //It is used to determine if all words are already unhidden.
+        List<Word> hiddenWords = _words.Where(word => word._hidden).ToList();
+
+        //creates a variable index to store the index of the word hidden.    
+        //It randomly selects an index from the _words list until it finds an unhidden word.   
+        int index;
+        //keep generating a random index until an hidden word is found. 
+        do{   
+            index = random.Next(hiddenWords.Count);
+        }
+        
+        // If an unhidden word is found, the Hide method is called to hide it, 
+        // update the _words list of unhiddenWords's properity
+        while (hiddenWords[index]._hidden==false);
+        hiddenWords[index].Reveal();
+        
+    }
+    public string revealRender()
+    {
+        //This allows the Scripture object to keep track of how many words should be hidden based on the user's input.
+        //string.Join(" ", ...) is used to join the words together into a single string with spaces between them.
+        //_words.Select(word => word.Render(wordsToHide)) It allows the Render method in the Word class to decide whether to display the word or hide it based on the value of wordsToHide.
+        return $"{_reference}: {string.Join(" ", _words.Select(word => word.revealRender()))}";
     }
 }
 
