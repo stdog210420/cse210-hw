@@ -1,7 +1,11 @@
 using System;
 
-public class Eternal
+public class Eternal:Goal
 {
 
+    public override int GetGrade()
+    {
+        return -1;
+    }
     
 }

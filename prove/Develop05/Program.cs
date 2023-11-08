@@ -9,9 +9,8 @@ class Program
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
         Tracker myTracker = new Tracker();
-        Goal myGoal = new Goal();
         string  _choice = "0";
-        int i = 0; int j = 0; int k =0;
+
 
         while (_choice != "6")
         {
@@ -34,14 +33,17 @@ class Program
                         {
                             case "1":
                             {
+                                mySimple.CreateNewGoal();
                                 break;
                             }
                             case "2":
                             {
+                                myEternal.CreateNewGoal();
                                 break;
                             }
                             case "3":
                             {
+                                myChecklist.CreateNewGoal();
                                 break;
                             }  
                         }                      
@@ -53,29 +55,29 @@ class Program
                 case "2":
                 {                
                     myTracker.ListGoal();
-                    j ++;
+
 
                     break;
                 }
                 // choice 3. Save Goals  
                 case "3":
                 {
-                    myTracker.ListingActivity();
-                    k ++;  
+                    myTracker.SaveGoal();
+
                     break;
                 }
                 // choice 4. Load Goals  
                 case "4":
                 {
-                    myTracker.ListingActivity();
-                    k ++;  
+                    myTracker.LoadGoal();
+
                     break;
                 }
                 // choice 5. Record Events 
                 case "5":
                 {
-                    myTracker.ListingActivity();
-                    k ++;  
+                    myTracker.RecordEvent();
+
                     break;
                 }
                 // choice 6. Quit  
