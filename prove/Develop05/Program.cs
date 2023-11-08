@@ -21,31 +21,65 @@ class Program
             _choice = Console.ReadLine();
             switch(_choice)
             {
-                // choice 1. Breathing Activity
+                // choice 1. Create New Goal
                 case "1":
                 {
-                    myBreathing.BreathingActivity();
-                    i ++;
+                    
+                    while (_choice != "")
+                    {
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;            
+                        myTracker.CreateGoal();
+                        _choice = Console.ReadLine();
+                        switch(_choice)
+                        {
+                            case "1":
+                            {
+                                break;
+                            }
+                            case "2":
+                            {
+                                break;
+                            }
+                            case "3":
+                            {
+                                break;
+                            }  
+                        }                      
+                    }                    
                     
                     break;
                 }
-                // choice 2. Reflection Activity
+                // choice 2. List Goals
                 case "2":
                 {                
-                    myReflection.ReflectionActivity();
+                    myTracker.ListGoal();
                     j ++;
 
                     break;
                 }
-                // choice 3. Listing Activity  
+                // choice 3. Save Goals  
                 case "3":
                 {
-                    myListing.ListingActivity();
+                    myTracker.ListingActivity();
                     k ++;  
                     break;
                 }
-                // choice 4. Quit  
+                // choice 4. Load Goals  
                 case "4":
+                {
+                    myTracker.ListingActivity();
+                    k ++;  
+                    break;
+                }
+                // choice 5. Record Events 
+                case "5":
+                {
+                    myTracker.ListingActivity();
+                    k ++;  
+                    break;
+                }
+                // choice 6. Quit  
+                case "6":
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
