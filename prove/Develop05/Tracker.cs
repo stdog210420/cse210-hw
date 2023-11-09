@@ -1,7 +1,15 @@
 using System;
 using System.IO;
 public class Tracker
-{
+{   int i = 0;
+    private List<string> _goals = new List<string>();
+    string goal;
+    string  _choice = "0";
+    string _check = "";
+    string _name;
+    string _description;
+    int _score = 0;
+
     public void TrackerOptions()
     {   
         Console.ForegroundColor = ConsoleColor.Blue;    
@@ -21,93 +29,52 @@ public class Tracker
         Console.WriteLine("  1. Simple Goal");
         Console.WriteLine("  2. Eternal Goals");
         Console.WriteLine("  3. Checklist Goals");
-        Console.Write("Which type of goal would you like to create? ");         
+        Console.Write("Which type of goal would you like to create? ");    
+                        
     }
-
-    //creat a list to store all entries
-    private List<Goal> _Entries = new List<Goal>();
-    private string _FileName;
-
-    //set an intialized value to Filename
-    private void SetGoal(string _fileName)
+    public string  FormattedGoal()
+    {
+        string _formattedGoal= $"{i}. [{_check}] {_name} ({_description})";
+        return _formattedGoal;
+    } 
+    
+    public void SetGoal()
     {
         // creat a new entry and add them to the journal
-        Goal newGoal = new Goal();
+        goal = FormattedGoal();
 
-        _Entries.Add(_newEntry);
-        Console.WriteLine("Entry saved successfully.");
-        _FileName = _fileName;
+        _goals.Add(goal);
+        Console.WriteLine("You have set a new goal.");
     }
     public void ListGoal()
     {
+        Console.WriteLine("Display all goals：");    
+        foreach (string goal in _goals)
+        {
+            Console.WriteLine($"{goal}\n");
+        }        
         
     }
-    public void SaveGoal()
+    public void SaveGoal(string FileName)
     {
-
-    }
-    public void LoadGoal()
-    {
-
-    }
-    public void RecordEvent()
-    {
-
-    }
-
-
-    
-        public void WriteNewEntry()
+        // check if the user type a filename, if not, ask to type one.
+        if (string.IsNullOrEmpty(FileName))
         {
-            string _response = Console.ReadLine();
+            Console.WriteLine("What is the filename? ");
+            FileName = Console.ReadLine();
+        }
 
-
-        }  
-        public void display()
-        {        
-            Console.WriteLine("Display all journals：");    
-            foreach (Entry entry in _Entries)
-            {
-                string _formatted = entry.formattedEntry();
-                Console.WriteLine($"{_formatted}\n");
-            }
-        } 
-        public void displayEntries(string _FileName)
+        // Open the file in append mode, create it if it doesn't exist.
+        using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
-            
-            Console.WriteLine("Display all journals from " + _FileName + "：");  
-            string[] _lines = System.IO.File.ReadAllLines(_FileName);
-            foreach (string entry in _lines)
+            // Write new entries into the file
+            foreach (string goal in _goals)
             {
-                string[] _parts = entry.Split(",");
-                foreach (string part in _parts)
-                {
-                    Console.WriteLine(part);
-                }
-                // 將舊檔資料新增到 ExistingEntries 中
-                // _Entries.Add(_lines);
+                outputFile.WriteLine(goal);
             }
         }
-        public void SaveJournalEntries(string _fileName)
-        {
-            // check if the user type a filename, if not, ask to type one.
-            if (string.IsNullOrEmpty(_fileName))
-            {
-                Console.WriteLine("What is the filename? ");
-                _fileName = Console.ReadLine() + ".txt";
-            }
+        Console.WriteLine("Goals saved successfully in " + FileName);
 
-            // Open the file in append mode, create it if it doesn't exist.
-            using (StreamWriter outputFile = new StreamWriter(_fileName, true)) // 使用 true 參數表示追加模式
-            {
-                // Write new entries into the file
-                foreach (Entry entry in _Entries)
-                {
-                    string _formatted = entry.formattedEntry();
-                    outputFile.WriteLine(_formatted);
-                }
-            }
-            Console.WriteLine("Entries saved successfully in " + _fileName);
-        }
+    }
 
 }

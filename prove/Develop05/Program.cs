@@ -1,16 +1,20 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using System.IO;
 
 class Program
 {
     static void Main(string[] args)
     {
         // Design Requirements
+
+        Tracker myTracker = new Tracker();
+        string  _choice = "0";
+        string _fileName;
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
-        Tracker myTracker = new Tracker();
-        string  _choice = "0";
-
 
         while (_choice != "6")
         {
@@ -23,31 +27,29 @@ class Program
                 // choice 1. Create New Goal
                 case "1":
                 {
-                    
-                    while (_choice != "")
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;            
+                    myTracker.CreateGoal();
+                    _choice = Console.ReadLine();
+                    switch(_choice)
                     {
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;            
-                        myTracker.CreateGoal();
-                        _choice = Console.ReadLine();
-                        switch(_choice)
+                        case "1":
                         {
-                            case "1":
-                            {
-                                mySimple.CreateNewGoal();
-                                break;
-                            }
-                            case "2":
-                            {
-                                myEternal.CreateNewGoal();
-                                break;
-                            }
-                            case "3":
-                            {
-                                myChecklist.CreateNewGoal();
-                                break;
-                            }  
-                        }                      
-                    }                    
+                            mySimple.CreateNewGoal();
+                            break;
+                        }
+                        case "2":
+                        {
+                            myEternal.CreateNewGoal();
+                            break;
+                        }
+                        case "3":
+                        {
+                            myChecklist.CreateNewGoal();
+                            break;
+                        }  
+                    }  
+                    myTracker.SetGoal();                        
+                    
                     
                     break;
                 }
@@ -56,27 +58,28 @@ class Program
                 {                
                     myTracker.ListGoal();
 
-
                     break;
                 }
                 // choice 3. Save Goals  
                 case "3":
                 {
-                    myTracker.SaveGoal();
+                    Console.WriteLine("What is the filename for the goal file? ");
+                    _fileName = Console.ReadLine();
+                    myTracker.SaveGoal(_fileName);
 
                     break;
                 }
                 // choice 4. Load Goals  
                 case "4":
                 {
-                    myTracker.LoadGoal();
+                    // myTracker.LoadGoal();
 
                     break;
                 }
                 // choice 5. Record Events 
                 case "5":
                 {
-                    myTracker.RecordEvent();
+                    // myTracker.RecordEvent();
 
                     break;
                 }
