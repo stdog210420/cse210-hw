@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using Microsoft.VisualBasic;
 
 class Program
 {
@@ -45,11 +46,11 @@ class Program
                         case "3":
                         {
                             myChecklist.CreateNewGoal();
+                            myChecklist.CreateBonus();
                             break;
                         }  
                     }  
-                    myTracker.SetGoal();                        
-                    
+                    myTracker.Grades();                        
                     
                     break;
                 }

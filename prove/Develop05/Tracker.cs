@@ -1,15 +1,7 @@
 using System;
 using System.IO;
-public class Tracker
-{   int i = 0;
-    private List<string> _goals = new List<string>();
-    string goal;
-    string  _choice = "0";
-    string _check = "";
-    string _name;
-    string _description;
-    int _score = 0;
-
+public class Tracker:Goal
+{ 
     public void TrackerOptions()
     {   
         Console.ForegroundColor = ConsoleColor.Blue;    
@@ -32,49 +24,10 @@ public class Tracker
         Console.Write("Which type of goal would you like to create? ");    
                         
     }
-    public string  FormattedGoal()
+    public override int GetGrade()
     {
-        string _formattedGoal= $"{i}. [{_check}] {_name} ({_description})";
-        return _formattedGoal;
-    } 
-    
-    public void SetGoal()
-    {
-        // creat a new entry and add them to the journal
-        goal = FormattedGoal();
-
-        _goals.Add(goal);
-        Console.WriteLine("You have set a new goal.");
+        return -1;
     }
-    public void ListGoal()
-    {
-        Console.WriteLine("Display all goals：");    
-        foreach (string goal in _goals)
-        {
-            Console.WriteLine($"{goal}\n");
-        }        
-        
-    }
-    public void SaveGoal(string FileName)
-    {
-        // check if the user type a filename, if not, ask to type one.
-        if (string.IsNullOrEmpty(FileName))
-        {
-            Console.WriteLine("What is the filename? ");
-            FileName = Console.ReadLine();
-        }
 
-        // Open the file in append mode, create it if it doesn't exist.
-        using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
-        {
-            // Write new entries into the file
-            foreach (string goal in _goals)
-            {
-                outputFile.WriteLine(goal);
-            }
-        }
-        Console.WriteLine("Goals saved successfully in " + FileName);
-
-    }
 
 }
