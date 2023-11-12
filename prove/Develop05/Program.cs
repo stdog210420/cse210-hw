@@ -13,9 +13,9 @@ class Program
         Tracker myTracker = new Tracker();
         string  _choice = "0";
         string _fileName;
-        Simple mySimple = new Simple();
-        Eternal myEternal = new Eternal();
-        Checklist myChecklist = new Checklist();
+        Simple mySimple = new Simple(1, "");
+        Eternal myEternal = new Eternal(1, "");
+        Checklist myChecklist = new Checklist(1, "");
 
         while (_choice != "6")
         {
@@ -36,21 +36,23 @@ class Program
                         case "1":
                         {
                             mySimple.CreateNewGoal();
+                            mySimple.Grades();
                             break;
                         }
                         case "2":
                         {
                             myEternal.CreateNewGoal();
+                            myEternal.Grades();
                             break;
                         }
                         case "3":
                         {
                             myChecklist.CreateNewGoal();
                             myChecklist.CreateBonus();
+                            myChecklist.Grades();
                             break;
                         }  
-                    }  
-                    myTracker.Grades();                        
+                    }                        
                     
                     break;
                 }

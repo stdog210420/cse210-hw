@@ -1,10 +1,21 @@
 using System;
+using System.Diagnostics.Contracts;
 
 public class Simple:Goal
 {
-    public override int GetGrade()
+    public Simple (int i, string check):base(i, check)
     {
-        return -1;
+        _GoalList.Add(_GoalText);
+        i++;
+    }
+    public override int Grades()
+    {
+        return _Score;
+    }
+    public override string Check()
+    {
+    
+        return "X";
     }
     
 }

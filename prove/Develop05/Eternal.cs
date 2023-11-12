@@ -2,10 +2,18 @@ using System;
 
 public class Eternal:Goal
 {
-
-    public override int GetGrade()
+    public Eternal (int i, string check):base(i, check)
     {
-        return -1;
+        _GoalList.Add(_GoalText);
+        i++;
     }
+    public override int Grades()
+    {
+        return _Score * _Achieve;
+    }
+    public override string Check()
+    {
     
+        return " ";
+    }   
 }
