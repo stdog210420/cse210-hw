@@ -87,11 +87,7 @@ public abstract class Goal
     {
         return _goals;
     }
-    public void SetGoalList()
-    {
-        _goal = $"{i}. [{Check}] {GetName()} ({GetDescription()})";
-        _goals.Add(_goal);
-    }
+
 
     public abstract int Grades();
     public abstract string Check();

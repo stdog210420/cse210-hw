@@ -1,8 +1,7 @@
 using System;
 using System.IO;
-public class Tracker:Goal
+public class Tracker
 { 
-    
     public void TrackerOptions()
     {   
         Console.ForegroundColor = ConsoleColor.Blue;    
@@ -25,43 +24,6 @@ public class Tracker:Goal
         Console.Write("Which type of goal would you like to create? ");    
                         
     }
-    public void ListGoal()
-    {
-        Console.WriteLine("Display all goals:");
-        for (int j = 0; j < GetGoalList().Count; j++)
-        {
-            Console.WriteLine($"{GetGoalList()[j]}");
-        }
-    }
-    public void SaveGoal(string FileName)
-    {
-        // check if the user type a filename, if not, ask to type one.
-        if (string.IsNullOrEmpty(FileName))
-        {
-            Console.WriteLine("What is the filename? ");
-            FileName = Console.ReadLine();
-        }
 
-        // Open the file in append mode, create it if it doesn't exist.
-        using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
-        {
-            // Write new entries into the file
-            foreach (string goal in GetGoalList())
-            {
-                outputFile.WriteLine(goal);
-            }
-        }
-        Console.WriteLine("Goals saved successfully in " + FileName);
 
-    }
-    public override int Grades()
-    {
-        return 0;
-
-    }
-    public override string Check()
-    {
-    
-        return "X";
-    }
 }

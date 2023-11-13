@@ -16,6 +16,9 @@ class Program
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
+        List<string> _goalList;        
+        string _goal;
+        int i = 1;
 
         while (_choice != "6")
         {
@@ -39,7 +42,6 @@ class Program
                             mySimple.SetDescription();
                             mySimple.SetScore();
                             mySimple.Grades();
-                            mySimple.SetGoalList();
                             break;
                         }
                         case "2":
@@ -48,7 +50,6 @@ class Program
                             myEternal.SetDescription();
                             myEternal.SetScore();
                             myEternal.Grades();
-                            myEternal.SetGoalList();
                             break;
                         }
                         case "3":
@@ -58,7 +59,6 @@ class Program
                             myChecklist.SetScore();
                             myChecklist.SetBonus();
                             myChecklist.Grades();
-                            myChecklist.SetGoalList();
                             break;
                         }  
                     }                        
@@ -68,7 +68,7 @@ class Program
                 // choice 2. List Goals
                 case "2":
                 {                
-                    myTracker.ListGoal();
+                   ListGoal(mySimple);
 
                     break;
                 }
@@ -77,7 +77,7 @@ class Program
                 {
                     Console.WriteLine("What is the filename for the goal file? ");
                     _fileName = Console.ReadLine();
-                    myTracker.SaveGoal(_fileName);
+                    myTracker.SaveGoal(_fileName, mySimple);
 
                     break;
                 }
@@ -104,6 +104,44 @@ class Program
                     break;
                 }
             }
+
+        }
+
+        
+        List<string> GoalList(Goal goal)
+        {
+            _goal = $"{i}. [{goal.Check}] {goal.GetName()} ({goal.GetDescription()})";
+            _goalList.Add(_goal);
+            i ++;
+            return _goalList;
+        }        
+        void ListGoal(Goal goal)
+        {
+            Console.WriteLine("Display all goals:");
+            for (int j = 0; j < GoalList(goal).Count; j++)
+            {
+                Console.WriteLine($"{GoalList(goal)[j]}");
+            }
+        }
+        void SaveGoal(string FileName, Goal goal)
+        {
+            // check if the user type a filename, if not, ask to type one.
+            if (string.IsNullOrEmpty(FileName))
+            {
+                Console.WriteLine("What is the filename? ");
+                FileName = Console.ReadLine();
+            }
+
+            // Open the file in append mode, create it if it doesn't exist.
+            using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
+            {
+                // Write new entries into the file
+                foreach (string _goal in GoalList(goal))
+                {
+                    outputFile.WriteLine(_goal);
+                }
+            }
+            Console.WriteLine("Goals saved successfully in " + FileName);
 
         }
 
