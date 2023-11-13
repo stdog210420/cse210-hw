@@ -2,25 +2,22 @@ using System;
 
 public class Checklist:Goal
 {
-    
-    private  int _time = 0;
-    private  int _bonus= 0;
-    public Checklist (int i, string check):base(i, check)
-    {
-        _GoalList.Add(_GoalText);
-        i++;
-    }
-    public void CreateBonus()
-    {
-        Console.Write("How many times does this goal need to be accomplished for a bonus ? ");
-        _time = int.Parse(Console.ReadLine());
-        Console.Write("What is bonus for accomplishing it that many times? ");
-        _bonus = int.Parse(Console.ReadLine());
-        Console.WriteLine($"time: {_time}  bonus: {_bonus} ");
-    }    
+
+    private int _grade;    
     public override int Grades()
     {
-        return _Score * _Achieve + _bonus;
+        if (GetAchieve() == 0)
+        {
+            Console.WriteLine ($"You have 0 points.");
+            _grade = 0;
+            return _grade;
+        }
+        else
+        {
+            _grade += GetScore() * GetAchieve() + GetBonus();
+            Console.WriteLine ($"You have {_grade} points.");        
+            return _grade;
+        }
     }
     public override string Check()
     {

@@ -2,15 +2,25 @@ using System;
 
 public class Eternal:Goal
 {
-    public Eternal (int i, string check):base(i, check)
-    {
-        _GoalList.Add(_GoalText);
-        i++;
-    }
+
+    private int _grade;
+
     public override int Grades()
     {
-        return _Score * _Achieve;
+        if (GetAchieve() == 0)
+        {
+            Console.WriteLine ($"You have 0 points.");
+            _grade = 0;
+            return _grade;
+        }
+        else
+        {
+            _grade += GetScore() * GetAchieve();
+            Console.WriteLine ($"You have {_grade} points.");        
+            return _grade;
+        }
     }
+
     public override string Check()
     {
     

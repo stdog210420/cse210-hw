@@ -13,9 +13,9 @@ class Program
         Tracker myTracker = new Tracker();
         string  _choice = "0";
         string _fileName;
-        Simple mySimple = new Simple(1, "");
-        Eternal myEternal = new Eternal(1, "");
-        Checklist myChecklist = new Checklist(1, "");
+        Simple mySimple = new Simple();
+        Eternal myEternal = new Eternal();
+        Checklist myChecklist = new Checklist();
 
         while (_choice != "6")
         {
@@ -35,21 +35,30 @@ class Program
                     {
                         case "1":
                         {
-                            mySimple.CreateNewGoal();
+                            mySimple.SetName();
+                            mySimple.SetDescription();
+                            mySimple.SetScore();
                             mySimple.Grades();
+                            mySimple.SetGoalList();
                             break;
                         }
                         case "2":
                         {
-                            myEternal.CreateNewGoal();
+                            myEternal.SetName();
+                            myEternal.SetDescription();
+                            myEternal.SetScore();
                             myEternal.Grades();
+                            myEternal.SetGoalList();
                             break;
                         }
                         case "3":
                         {
-                            myChecklist.CreateNewGoal();
-                            myChecklist.CreateBonus();
+                            myChecklist.SetName();
+                            myChecklist.SetDescription();
+                            myChecklist.SetScore();
+                            myChecklist.SetBonus();
                             myChecklist.Grades();
+                            myChecklist.SetGoalList();
                             break;
                         }  
                     }                        
@@ -97,5 +106,16 @@ class Program
             }
 
         }
+
+
+  //creat a list to store all entries
+    //set an intialized value to Filename
+
+    // public void LoadGoal()
+    // {
+
+    // }
+    // public void RecordEvent()
+    // {
     }
 }

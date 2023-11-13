@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-public class Tracker
+public class Tracker:Goal
 { 
-    Goal myGoals = new Goal();
+    
     public void TrackerOptions()
     {   
         Console.ForegroundColor = ConsoleColor.Blue;    
@@ -25,13 +25,12 @@ public class Tracker
         Console.Write("Which type of goal would you like to create? ");    
                         
     }
-
     public void ListGoal()
     {
         Console.WriteLine("Display all goals:");
-        for (int j = 0; j < myGoals.GoalList().Count; j++)
+        for (int j = 0; j < GetGoalList().Count; j++)
         {
-            Console.WriteLine($"{myGoals.GoalList()[j]}");
+            Console.WriteLine($"{GetGoalList()[j]}");
         }
     }
     public void SaveGoal(string FileName)
@@ -47,7 +46,7 @@ public class Tracker
         using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
             // Write new entries into the file
-            foreach (string goal in GoalList())
+            foreach (string goal in GetGoalList())
             {
                 outputFile.WriteLine(goal);
             }
@@ -55,15 +54,14 @@ public class Tracker
         Console.WriteLine("Goals saved successfully in " + FileName);
 
     }
+    public override int Grades()
+    {
+        return 0;
 
-  //creat a list to store all entries
-    //set an intialized value to Filename
-
-    // public void LoadGoal()
-    // {
-
-    // }
-    // public void RecordEvent()
-    // {
-
+    }
+    public override string Check()
+    {
+    
+        return "X";
+    }
 }
