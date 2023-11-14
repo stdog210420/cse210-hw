@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.VisualBasic;
 
-class Program
+public class Program
 {
     static void Main(string[] args)
     {
@@ -16,9 +17,6 @@ class Program
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
-        List<string> _goalList;        
-        string _goal;
-        int i = 1;
 
         while (_choice != "6")
         {
@@ -42,6 +40,7 @@ class Program
                             mySimple.SetDescription();
                             mySimple.SetScore();
                             mySimple.Grades();
+                            GetGoalList(mySimple);
                             break;
                         }
                         case "2":
@@ -50,6 +49,7 @@ class Program
                             myEternal.SetDescription();
                             myEternal.SetScore();
                             myEternal.Grades();
+                            GetGoalList(myEternal);
                             break;
                         }
                         case "3":
@@ -59,6 +59,7 @@ class Program
                             myChecklist.SetScore();
                             myChecklist.SetBonus();
                             myChecklist.Grades();
+                            GetGoalList(myChecklist);
                             break;
                         }  
                     }                        
@@ -68,8 +69,9 @@ class Program
                 // choice 2. List Goals
                 case "2":
                 {                
-                   ListGoal(mySimple);
-
+                    
+                    ListGoal();
+                    
                     break;
                 }
                 // choice 3. Save Goals  
@@ -77,7 +79,7 @@ class Program
                 {
                     Console.WriteLine("What is the filename for the goal file? ");
                     _fileName = Console.ReadLine();
-                    myTracker.SaveGoal(_fileName, mySimple);
+                    SaveGoal(_fileName, mySimple);
 
                     break;
                 }
@@ -106,44 +108,43 @@ class Program
             }
 
         }
+    }
+    public static List<string> _goalList;    
+    public static void GetGoalList(Goal g)
+    {   
+        _goalList = new List<string>();
+        _goalList.Add(g.GetGoal());      
+    }
 
-        
-        List<string> GoalList(Goal goal)
+    public static void ListGoal()
+    {      
+        Console.WriteLine("Display all goals:");
+        for (int j = 0; j < _goalList.Count; j++)
         {
-            _goal = $"{i}. [{goal.Check}] {goal.GetName()} ({goal.GetDescription()})";
-            _goalList.Add(_goal);
-            i ++;
-            return _goalList;
-        }        
-        void ListGoal(Goal goal)
+            Console.WriteLine($"{_goalList[j]}");
+        }
+    }
+    public static void SaveGoal(string FileName, Goal goal)
+    {
+        // check if the user type a filename, if not, ask to type one.
+        if (string.IsNullOrEmpty(FileName))
         {
-            Console.WriteLine("Display all goals:");
-            for (int j = 0; j < GoalList(goal).Count; j++)
+            Console.WriteLine("What is the filename? ");
+            FileName = Console.ReadLine();
+        }
+
+        // Open the file in append mode, create it if it doesn't exist.
+        using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
+        {
+            // Write new entries into the file
+            foreach (string _goal in _goalList)
             {
-                Console.WriteLine($"{GoalList(goal)[j]}");
+                outputFile.WriteLine(_goal);
             }
         }
-        void SaveGoal(string FileName, Goal goal)
-        {
-            // check if the user type a filename, if not, ask to type one.
-            if (string.IsNullOrEmpty(FileName))
-            {
-                Console.WriteLine("What is the filename? ");
-                FileName = Console.ReadLine();
-            }
+        Console.WriteLine("Goals saved successfully in " + FileName);
 
-            // Open the file in append mode, create it if it doesn't exist.
-            using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
-            {
-                // Write new entries into the file
-                foreach (string _goal in GoalList(goal))
-                {
-                    outputFile.WriteLine(_goal);
-                }
-            }
-            Console.WriteLine("Goals saved successfully in " + FileName);
-
-        }
+    }
 
 
   //creat a list to store all entries
@@ -155,5 +156,5 @@ class Program
     // }
     // public void RecordEvent()
     // {
-    }
+    
 }

@@ -4,10 +4,10 @@ using System.IO;
 
 public abstract class Goal
 {   
-    private static int i = 1;
+    private  int i = 1;
     private  int _achieve = 0;
     private  string _goal;
-    private  List<string> _goals = new List<string>();
+    // private  List<string> _goals = new List<string>();
     private  string _name;
     private  string _description;
     private  int _score = 0;
@@ -83,11 +83,12 @@ public abstract class Goal
     {
         _achieve ++;        
     }
-    public List<string> GetGoalList()
+    public string GetGoal()
     {
-        return _goals;
+        _goal = $"{i}. [{Check()}] {_name} ({_description})"; 
+        i ++;
+        return _goal;
     }
-
 
     public abstract int Grades();
     public abstract string Check();
