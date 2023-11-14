@@ -8,14 +8,14 @@ public class Checklist:Goal
     {
         if (GetAchieve() == 0)
         {
-            Console.WriteLine ($"You have 0 points.");
+            Console.WriteLine ($"\nYou have 0 points.");
             _grade = 0;
             return _grade;
         }
         else
         {
             _grade += GetScore() * GetAchieve() + GetBonus();
-            Console.WriteLine ($"You have {_grade} points.");        
+            Console.WriteLine ($"\nYou have {_grade} points.");        
             return _grade;
         }
     }

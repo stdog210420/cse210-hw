@@ -15,37 +15,35 @@ public abstract class Goal
     private  int _bonus = 0;
 
 
-    // public void CreateNewGoal()
-    // {
-    //     Console.Write("What is name of your goal? ");
-    //     _name = Console.ReadLine();        
-    //     Console.Write("What is a short description of it? ");
-    //     _description = Console.ReadLine();
-    //     Console.Write("What is the amount of points associated with this goal? ");
-    //     _score = int.Parse(Console.ReadLine());
-    //     Console.WriteLine($"Goal: {_name}  Description: {_description}  Grade: {_score}");
-    //     _goal = $"{i}. [{_check}] {_name} ({_description})";
-    //     _goals.Add(_goal);
-    // }
-    public string GetName()
-    {
-        return _name; 
-    }
-    public void SetName()
+    public void CreateNewGoal()
     {
         Console.Write("What is name of your goal? ");
-        _name = Console.ReadLine(); 
-    }
-
-    public string GetDescription()
-    {
-        return _description;
-    }
-    public void SetDescription()
-    {
+        _name = Console.ReadLine();        
         Console.Write("What is a short description of it? ");
         _description = Console.ReadLine();
+        // Console.Write("What is the amount of points associated with this goal? ");
+        // _score = int.Parse(Console.ReadLine());
+        // Console.WriteLine($"Goal: {_name}  Description: {_description}  Grade: {_score}");
     }
+    // public string GetName()
+    // {
+    //     return _name; 
+    // }
+    // public void SetName()
+    // {
+    //     Console.Write("What is name of your goal? ");
+    //     _name = Console.ReadLine(); 
+    // }
+
+    // public string GetDescription()
+    // {
+    //     return _description;
+    // }
+    // public void SetDescription()
+    // {
+    //     Console.Write("What is a short description of it? ");
+    //     _description = Console.ReadLine();
+    // }
 
     public int GetScore()
     {

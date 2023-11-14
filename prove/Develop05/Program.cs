@@ -7,6 +7,8 @@ using Microsoft.VisualBasic;
 
 public class Program
 {
+    public static List<string> _goalList;  
+    public static string _goal;
     static void Main(string[] args)
     {
         // Design Requirements
@@ -17,10 +19,11 @@ public class Program
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
+        
 
         while (_choice != "6")
         {
-
+            
             Console.ForegroundColor = ConsoleColor.Blue;            
             myTracker.TrackerOptions();
             _choice = Console.ReadLine();
@@ -36,8 +39,7 @@ public class Program
                     {
                         case "1":
                         {
-                            mySimple.SetName();
-                            mySimple.SetDescription();
+                            mySimple.CreateNewGoal();
                             mySimple.SetScore();
                             mySimple.Grades();
                             GetGoalList(mySimple);
@@ -45,8 +47,7 @@ public class Program
                         }
                         case "2":
                         {
-                            myEternal.SetName();
-                            myEternal.SetDescription();
+                            myEternal.CreateNewGoal();
                             myEternal.SetScore();
                             myEternal.Grades();
                             GetGoalList(myEternal);
@@ -54,8 +55,7 @@ public class Program
                         }
                         case "3":
                         {
-                            myChecklist.SetName();
-                            myChecklist.SetDescription();
+                            myChecklist.CreateNewGoal();
                             myChecklist.SetScore();
                             myChecklist.SetBonus();
                             myChecklist.Grades();
@@ -109,13 +109,13 @@ public class Program
 
         }
     }
-    public static List<string> _goalList;    
+  
     public static void GetGoalList(Goal g)
     {   
         _goalList = new List<string>();
         _goalList.Add(g.GetGoal());      
     }
-
+    
     public static void ListGoal()
     {      
         Console.WriteLine("Display all goals:");
