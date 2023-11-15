@@ -21,7 +21,7 @@ public class Program
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
-        int _time = 0;
+        int _achieve = 0;
 
         while (_choice != "6")
         {
@@ -41,15 +41,10 @@ public class Program
                     {
                         case "1":
                         {
-                            _time = mySimple.GetCheck();
-                            if (_time ==1)
-                            {
-                                mySimple.CreateNewGoal();
-                                mySimple.SetScore();
-                                mySimple.Grades();
-                                _goal = mySimple.GetGoal(j);
-                            } 
-
+                            mySimple.CreateNewGoal();
+                            mySimple.SetScore();
+                            mySimple.Grades();
+                            _goal = mySimple.GetGoal(j);
                             break;
                         }
                         case "2":
@@ -62,14 +57,14 @@ public class Program
                         }
                         case "3":
                         {
-                            while (j <= _time)
-                            {
-                                myChecklist.CreateNewGoal();
-                                myChecklist.SetScore();
-                                myChecklist.SetBonus();
-                                myChecklist.Grades();
-                                _goal = myChecklist.GetGoal(j);
-                            }
+
+                            myChecklist.CreateNewGoal();
+                            myChecklist.SetScore();
+                            myChecklist.SetTime();
+                            myChecklist.SetBonus();
+                            myChecklist.Grades();
+                            _goal = myChecklist.GetGoal(j);
+
                             break;
                         }  
                     }                        
@@ -104,6 +99,10 @@ public class Program
                 // choice 5. Record Events 
                 case "5":
                 {
+                    Console.WriteLine("");
+                    Tracker.CreateGoal();
+                    _choice = Console.ReadLine();
+                    _achieve ++;
                     // myTracker.RecordEvent();
 
                     break;
