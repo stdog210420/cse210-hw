@@ -5,7 +5,7 @@ public class Tracker
     public void TrackerOptions()
     {   
         Console.ForegroundColor = ConsoleColor.Blue;    
-        Console.WriteLine("Menu Options:");              
+        Console.WriteLine("\nMenu Options:");              
         Console.WriteLine("  1. Create New Goal");
         Console.WriteLine("  2. List Goals");
         Console.WriteLine("  3. Save Goals");
@@ -17,7 +17,7 @@ public class Tracker
     public void CreateGoal()
     {
         Console.ForegroundColor = ConsoleColor.Blue;    
-        Console.WriteLine("The types of Goals are:");              
+        Console.WriteLine("\nThe types of Goals are:");              
         Console.WriteLine("  1. Simple Goal");
         Console.WriteLine("  2. Eternal Goals");
         Console.WriteLine("  3. Checklist Goals");

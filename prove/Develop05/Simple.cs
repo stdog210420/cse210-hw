@@ -3,7 +3,6 @@ using System.Diagnostics.Contracts;
 
 public class Simple:Goal
 {
-
     private int _grade;
     public override int Grades()
     {
@@ -22,8 +21,7 @@ public class Simple:Goal
 
     }
     public override string Check()
-    {
-    
+    {        
         return "X";
     }
     

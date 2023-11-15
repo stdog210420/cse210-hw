@@ -4,6 +4,7 @@ public class Checklist:Goal
 {
 
     private int _grade;    
+    private int _time;
     public override int Grades()
     {
         if (GetAchieve() == 0)
@@ -21,7 +22,7 @@ public class Checklist:Goal
     }
     public override string Check()
     {
-    
+        _time = GetTime();
         return "X";
     }
 }

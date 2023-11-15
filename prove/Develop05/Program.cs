@@ -7,8 +7,10 @@ using Microsoft.VisualBasic;
 
 public class Program
 {
-    public static List<string> _goalList;  
+    //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
+    public static List<string> _goalList = new List<string>();
     public static string _goal;
+    public static int j = 1;
     static void Main(string[] args)
     {
         // Design Requirements
@@ -19,7 +21,7 @@ public class Program
         Simple mySimple = new Simple();
         Eternal myEternal = new Eternal();
         Checklist myChecklist = new Checklist();
-        
+        int _time = 0;
 
         while (_choice != "6")
         {
@@ -39,10 +41,15 @@ public class Program
                     {
                         case "1":
                         {
-                            mySimple.CreateNewGoal();
-                            mySimple.SetScore();
-                            mySimple.Grades();
-                            GetGoalList(mySimple);
+                            _time = mySimple.GetCheck();
+                            if (_time ==1)
+                            {
+                                mySimple.CreateNewGoal();
+                                mySimple.SetScore();
+                                mySimple.Grades();
+                                _goal = mySimple.GetGoal(j);
+                            } 
+
                             break;
                         }
                         case "2":
@@ -50,20 +57,24 @@ public class Program
                             myEternal.CreateNewGoal();
                             myEternal.SetScore();
                             myEternal.Grades();
-                            GetGoalList(myEternal);
+                            _goal = myEternal.GetGoal(j);
                             break;
                         }
                         case "3":
                         {
-                            myChecklist.CreateNewGoal();
-                            myChecklist.SetScore();
-                            myChecklist.SetBonus();
-                            myChecklist.Grades();
-                            GetGoalList(myChecklist);
+                            while (j <= _time)
+                            {
+                                myChecklist.CreateNewGoal();
+                                myChecklist.SetScore();
+                                myChecklist.SetBonus();
+                                myChecklist.Grades();
+                                _goal = myChecklist.GetGoal(j);
+                            }
                             break;
                         }  
                     }                        
-                    
+                    _goalList.Add(_goal);
+                    j ++;
                     break;
                 }
                 // choice 2. List Goals
@@ -109,16 +120,16 @@ public class Program
 
         }
     }
-  
-    public static void GetGoalList(Goal g)
-    {   
-        _goalList = new List<string>();
-        _goalList.Add(g.GetGoal());      
-    }
+
+    // public static void GetGoalList(Goal g)
+    // {   
+    //     _goalList = new List<string>();
+    //     _goalList.Add(g.GetGoal());      
+    // }
     
     public static void ListGoal()
     {      
-        Console.WriteLine("Display all goals:");
+        Console.WriteLine("\nDisplay all goals:");
         for (int j = 0; j < _goalList.Count; j++)
         {
             Console.WriteLine($"{_goalList[j]}");
