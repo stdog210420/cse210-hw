@@ -4,6 +4,12 @@ using System.Diagnostics.Contracts;
 public class Simple:Goal
 {
     private int _grade;
+    private  string _goal;
+    public override string GetGoal(int i = 0)
+    {
+        _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})"; 
+        return _goal;
+    }
     public override int Grades()
     {
         if (GetAchieve() == 0)

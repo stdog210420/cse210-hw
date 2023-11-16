@@ -100,7 +100,7 @@ public class Program
                 case "5":
                 {
                     Console.WriteLine("");
-                    Tracker.CreateGoal();
+                    myTracker.CreateGoal();
                     _choice = Console.ReadLine();
                     _achieve ++;
                     // myTracker.RecordEvent();
@@ -147,13 +147,27 @@ public class Program
         using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
             // Write new entries into the file
-            foreach (string _goal in _goalList)
+            foreach (string _item in _goalList)
             {
-                outputFile.WriteLine(_goal);
+                outputFile.WriteLine(_item);
             }
         }
         Console.WriteLine("Goals saved successfully in " + FileName);
-
+    }
+    public static void LoadGoal()
+    {  
+        Console.WriteLine("What is the filename? ");
+        string _FileName = Console.ReadLine();                
+        Console.WriteLine("Display all journals from " + _FileName + "：");  
+        string[] _lines = System.IO.File.ReadAllLines(_FileName);
+        foreach (string goal in _lines)
+        {
+            string[] _parts = goal.Split(",");
+            foreach (string part in _parts)
+            {
+                Console.WriteLine(part);
+            }
+        }
     }
 
 

@@ -5,7 +5,7 @@ using System.IO;
 public abstract class Goal
 {   
     private  int _achieve = 0;
-    private  string _goal;
+
     // private  List<string> _goals = new List<string>();
     private  string _name;
     private  string _description;
@@ -19,25 +19,25 @@ public abstract class Goal
         Console.Write("What is a short description of it? ");
         _description = Console.ReadLine();
     }
-    // public string GetName()
-    // {
-    //     return _name; 
-    // }
-    // public void SetName()
-    // {
-    //     Console.Write("What is name of your goal? ");
-    //     _name = Console.ReadLine(); 
-    // }
+    public string GetName()
+    {
+        return _name; 
+    }
+    public void SetName()
+    {
+        Console.Write("What is name of your goal? ");
+        _name = Console.ReadLine(); 
+    }
 
-    // public string GetDescription()
-    // {
-    //     return _description;
-    // }
-    // public void SetDescription()
-    // {
-    //     Console.Write("What is a short description of it? ");
-    //     _description = Console.ReadLine();
-    // }
+    public string GetDescription()
+    {
+        return _description;
+    }
+    public void SetDescription()
+    {
+        Console.Write("What is a short description of it? ");
+        _description = Console.ReadLine();
+    }
 
     public int GetScore()
     {
@@ -66,11 +66,8 @@ public abstract class Goal
     {
         _check ++;        
     }
-    public string GetGoal(int i = 0)
-    {
-        _goal = $"{i}. [{Check()}] {_name} ({_description})"; 
-        return _goal;
-    }
+    public abstract string GetGoal(int i = 0);
+
 
     public abstract int Grades();
     public abstract string Check();

@@ -6,6 +6,12 @@ public class Checklist:Goal
     private int _grade;    
     private  int _time = 0;
     private  int _bonus = 0;
+    private  string _goal;
+    public override string GetGoal(int i = 0)
+    {
+        _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{_time}"; 
+        return _goal;
+    }
 
     public int GetTime()
     {
@@ -44,7 +50,7 @@ public class Checklist:Goal
     {
         if (GetAchieve() < GetTime())
         {
-            return "";
+            return " ";
         }
         else if(GetAchieve() == GetTime())
         {
