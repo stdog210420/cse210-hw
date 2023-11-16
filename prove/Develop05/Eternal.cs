@@ -5,10 +5,16 @@ public class Eternal:Goal
 
     private int _grade;
     private  string _goal;
+    private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
         _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})"; 
         return _goal;
+    }
+    public override string SaveGoal()
+    {
+        _saveGoal = $"EternalGoal: {GetName()}, {GetDescription()}, {GetScore()}"; 
+        return _saveGoal;
     }
 
     public override int Grades()
@@ -31,5 +37,13 @@ public class Eternal:Goal
     {
     
         return " ";
+    }
+    public override void IsComplete()
+    {        
+        
+    }
+    public override void RecordEvent()
+    {        
+        
     }   
 }

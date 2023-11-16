@@ -5,10 +5,24 @@ public class Simple:Goal
 {
     private int _grade;
     private  string _goal;
+    private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
         _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})"; 
         return _goal;
+    }
+    public override string SaveGoal()
+    {
+        if (GetAchieve() == 0)
+        {
+            _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, False"; 
+            return _saveGoal;
+        }
+        else
+        {
+            _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, True"; 
+            return _saveGoal;
+        }
     }
     public override int Grades()
     {
@@ -24,11 +38,18 @@ public class Simple:Goal
             Console.WriteLine ($"\nYou have {_grade} points.");        
             return _grade;
         }
-
     }
     public override string Check()
     {        
-        return "X";
+        return " ";
+    }
+    public override void IsComplete()
+    {        
+        
+    }
+    public override void RecordEvent()
+    {        
+        
     }
     
 }

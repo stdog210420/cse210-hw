@@ -7,10 +7,17 @@ public class Checklist:Goal
     private  int _time = 0;
     private  int _bonus = 0;
     private  string _goal;
+    private  string _saveGoal;
+    private  string _check;
     public override string GetGoal(int i = 0)
     {
         _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{_time}"; 
         return _goal;
+    }
+    public override string SaveGoal()
+    {
+        _saveGoal = $"CheckListGoal: {GetName()}, {GetDescription()}, {GetScore()}, {GetBonus()}, {GetAchieve()}, {GetTime()}"; 
+        return _saveGoal;
     }
 
     public int GetTime()
@@ -57,5 +64,20 @@ public class Checklist:Goal
             return "X";
         }     
             return "X";
+    }
+    public override void IsComplete()
+    {        
+        if (GetAchieve() < GetTime())
+        {
+            _check =  " ";
+        }
+        else if(GetAchieve() == GetTime())
+        {
+            _check =  "X";
+        }        
+    }
+    public override void RecordEvent()
+    {        
+        
     }
 }

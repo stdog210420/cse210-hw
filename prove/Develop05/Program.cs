@@ -9,8 +9,11 @@ public class Program
 {
     //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
     public static List<string> _goalList = new List<string>();
+    public static List<string> _saveGoalList = new List<string>();
     public static string _goal;
+    public static string _saveGoal;
     public static int j = 1;
+    public static string _item;
     static void Main(string[] args)
     {
         // Design Requirements
@@ -45,6 +48,7 @@ public class Program
                             mySimple.SetScore();
                             mySimple.Grades();
                             _goal = mySimple.GetGoal(j);
+                            _saveGoal = mySimple.SaveGoal();                           
                             break;
                         }
                         case "2":
@@ -53,6 +57,7 @@ public class Program
                             myEternal.SetScore();
                             myEternal.Grades();
                             _goal = myEternal.GetGoal(j);
+                            _saveGoal = myEternal.SaveGoal();    
                             break;
                         }
                         case "3":
@@ -64,11 +69,12 @@ public class Program
                             myChecklist.SetBonus();
                             myChecklist.Grades();
                             _goal = myChecklist.GetGoal(j);
-
+                            _saveGoal = myChecklist.SaveGoal();    
                             break;
                         }  
                     }                        
                     _goalList.Add(_goal);
+                    _saveGoalList.Add(_saveGoal);
                     j ++;
                     break;
                 }
@@ -85,14 +91,13 @@ public class Program
                 {
                     Console.WriteLine("What is the filename for the goal file? ");
                     _fileName = Console.ReadLine();
-                    SaveGoal(_fileName, mySimple);
-
+                    SaveGoal(_fileName);
                     break;
                 }
                 // choice 4. Load Goals  
                 case "4":
                 {
-                    // myTracker.LoadGoal();
+                    LoadGoal();
 
                     break;
                 }
@@ -134,7 +139,7 @@ public class Program
             Console.WriteLine($"{_goalList[j]}");
         }
     }
-    public static void SaveGoal(string FileName, Goal goal)
+    public static void SaveGoal(string FileName)
     {
         // check if the user type a filename, if not, ask to type one.
         if (string.IsNullOrEmpty(FileName))
@@ -147,7 +152,7 @@ public class Program
         using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
             // Write new entries into the file
-            foreach (string _item in _goalList)
+            foreach (string _item in _saveGoalList)
             {
                 outputFile.WriteLine(_item);
             }
@@ -159,10 +164,10 @@ public class Program
         Console.WriteLine("What is the filename? ");
         string _FileName = Console.ReadLine();                
         Console.WriteLine("Display all journals from " + _FileName + "：");  
-        string[] _lines = System.IO.File.ReadAllLines(_FileName);
+        string[] _lines = File.ReadAllLines(_FileName);
         foreach (string goal in _lines)
         {
-            string[] _parts = goal.Split(",");
+            string[] _parts = goal.Split("");
             foreach (string part in _parts)
             {
                 Console.WriteLine(part);
@@ -170,15 +175,12 @@ public class Program
         }
     }
 
-
-  //creat a list to store all entries
-    //set an intialized value to Filename
-
-    // public void LoadGoal()
-    // {
-
-    // }
-    // public void RecordEvent()
-    // {
+    public static void RecordEvent()
+    {
+        Console.WriteLine("Select a choice from the menu: ");
+        _item = Console.ReadLine();
+        Console.WriteLine("The goals are:");
+        Console.WriteLine($"{_goalList}");        
+    }
     
 }

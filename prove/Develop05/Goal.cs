@@ -67,10 +67,11 @@ public abstract class Goal
         _check ++;        
     }
     public abstract string GetGoal(int i = 0);
-
+    public abstract string SaveGoal();
 
     public abstract int Grades();
     public abstract string Check();
-
+    public abstract void IsComplete();
+    public abstract void RecordEvent();
 
 }
