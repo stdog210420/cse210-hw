@@ -8,7 +8,7 @@ public class Eternal:Goal
     private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})"; 
+        _goal = $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})"; 
         return _goal;
     }
     public override string SaveGoal()
@@ -17,7 +17,7 @@ public class Eternal:Goal
         return _saveGoal;
     }
 
-    public override int Grades()
+    public override int CalculateScore()
     {
         if (GetAchieve() == 0)
         {
@@ -31,12 +31,6 @@ public class Eternal:Goal
             Console.WriteLine ($"\nYou have {_grade} points.");        
             return _grade;
         }
-    }
-
-    public override string Check()
-    {
-    
-        return " ";
     }
     public override void IsComplete()
     {        

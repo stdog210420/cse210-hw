@@ -45,8 +45,7 @@ public class Program
                         case "1":
                         {
                             mySimple.CreateNewGoal();
-                            mySimple.SetScore();
-                            mySimple.Grades();
+                            mySimple.CalculateScore();
                             _goal = mySimple.GetGoal(j);
                             _saveGoal = mySimple.SaveGoal();                           
                             break;
@@ -54,8 +53,7 @@ public class Program
                         case "2":
                         {
                             myEternal.CreateNewGoal();
-                            myEternal.SetScore();
-                            myEternal.Grades();
+                            myEternal.CalculateScore();
                             _goal = myEternal.GetGoal(j);
                             _saveGoal = myEternal.SaveGoal();    
                             break;
@@ -64,10 +62,8 @@ public class Program
                         {
 
                             myChecklist.CreateNewGoal();
-                            myChecklist.SetScore();
-                            myChecklist.SetTime();
-                            myChecklist.SetBonus();
-                            myChecklist.Grades();
+                            myChecklist.CreateBonus();
+                            myChecklist.CalculateScore();
                             _goal = myChecklist.GetGoal(j);
                             _saveGoal = myChecklist.SaveGoal();    
                             break;

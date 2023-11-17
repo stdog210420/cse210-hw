@@ -8,23 +8,20 @@ public class Simple:Goal
     private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})"; 
+        _goal = $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})"; 
         return _goal;
     }
     public override string SaveGoal()
-    {
-        if (GetAchieve() == 0)
+    {   
+        string _finished = "false";
+        if (GetAchieve() != 0)
         {
-            _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, False"; 
-            return _saveGoal;
+            _finished = "True";
         }
-        else
-        {
-            _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, True"; 
-            return _saveGoal;
-        }
+        _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, {_finished}"; 
+        return _saveGoal;
     }
-    public override int Grades()
+    public override int CalculateScore()
     {
         if (GetAchieve() == 0)
         {
@@ -39,13 +36,10 @@ public class Simple:Goal
             return _grade;
         }
     }
-    public override string Check()
-    {        
-        return " ";
-    }
+
     public override void IsComplete()
     {        
-        
+        return " ";
     }
     public override void RecordEvent()
     {        

@@ -4,14 +4,12 @@ public class Checklist:Goal
 {
 
     private int _grade;    
-    private  int _time = 0;
-    private  int _bonus = 0;
     private  string _goal;
     private  string _saveGoal;
     private  string _check;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{Check()}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{_time}"; 
+        _goal = $"{i}. [{GetCheck}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{GetTime()}"; 
         return _goal;
     }
     public override string SaveGoal()
@@ -20,25 +18,8 @@ public class Checklist:Goal
         return _saveGoal;
     }
 
-    public int GetTime()
-    {
-        return _time;
-    }
-    public void SetTime()
-    {
-        Console.Write("How many times does this goal need to be accomplished for a bonus ? ");
-        _time = int.Parse(Console.ReadLine());
-    }
-    public int GetBonus()
-    {
-        return _bonus;
-    }
-    public void SetBonus()
-    {
-        Console.Write("What is bonus for accomplishing it that many times? ");
-        _bonus = int.Parse(Console.ReadLine());
-    }
-    public override int Grades()
+
+    public override int CalculateScore()
     {
         if (GetAchieve() == 0)
         {
