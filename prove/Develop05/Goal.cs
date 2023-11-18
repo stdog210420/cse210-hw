@@ -4,27 +4,12 @@ using System.IO;
 
 public abstract class Goal
 {   
-    private  int _achieve = 0;
     private  string _name;
     private  string _description;
     private  int _score = 0;
     private  int _time = 0;
     private  int _bonus = 0;
     private int _check = 0 ;
-    // public Goal()
-    // {
-    //     Console.Write("What is name of your goal? ");
-    //     _name = Console.ReadLine();        
-    //     Console.Write("What is a short description of it? ");
-    //     _description = Console.ReadLine();
-    //     Console.Write("What is the amount of points associated with this goal? ");
-    //     _score = int.Parse(Console.ReadLine());
-    //     while (!int.TryParse(Console.ReadLine(), out _score))
-    //     {
-    //         Console.WriteLine("Invalid input. Please enter a valid integer for the score.");
-    //         Console.Write("What is the amount of points associated with this goal? ");
-    //     }
-    // }
     public void CreateNewGoal()
     {
         Console.Write("What is name of your goal? ");
@@ -33,12 +18,6 @@ public abstract class Goal
         _description = Console.ReadLine();
         Console.Write("What is the amount of points associated with this goal? ");
         _score = int.Parse(Console.ReadLine());
-        while (!int.TryParse(Console.ReadLine(), out _score))
-        {
-            Console.WriteLine("Invalid input. Please enter a valid integer for the score.");
-            Console.Write("What is the amount of points associated with this goal? ");
-        }
-
     }
 
     public void CreateBonus()
@@ -85,6 +64,5 @@ public abstract class Goal
 
     public abstract int CalculateScore();
 
- 
 
 }

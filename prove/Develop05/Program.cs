@@ -63,6 +63,7 @@ public class Program
 
                             Goal newGoal = new Checklist();
                             newGoal.CreateNewGoal();
+                            newGoal.CreateBonus();
                             newGoal.CalculateScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
