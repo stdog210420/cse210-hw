@@ -4,12 +4,9 @@ using System.Diagnostics.Contracts;
 public class Simple:Goal
 {
     private int _grade;
-    private  string _goal;
-    private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})"; 
-        return _goal;
+        return $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})";
     }
     public override string SaveGoal()
     {   
@@ -18,8 +15,11 @@ public class Simple:Goal
         {
             _finished = "True";
         }
-        _saveGoal = $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, {_finished}"; 
-        return _saveGoal;
+        return $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, {_finished}"; 
+    }
+    public override string ListItem(int i = 0)
+    {
+        return $"{i}.{GetName()}";
     }
     public override int CalculateScore()
     {
@@ -27,23 +27,31 @@ public class Simple:Goal
         {
             Console.WriteLine ($"\nYou have 0 points.");
             _grade = 0;
-            return _grade;
         }
         else
         {
             _grade += GetScore();
             Console.WriteLine ($"\nYou have {_grade} points.");        
-            return _grade;
         }
+        return _grade;
     }
 
-    public override void IsComplete()
-    {        
-        return " ";
+    public override string IsComplete()
+    { 
+        if (GetAchieve()== 0)
+        {
+            return " "; 
+        } 
+        else if (GetAchieve()                                                                                                                                                                   ==1)
+        {                                                                                                                                
+            return "X"; 
+        }
+        return "X";     
     }
     public override void RecordEvent()
     {        
-        
+        Console.WriteLine($"The goal {GetName()} was accomplished.");
+        Console.WriteLine($"Congratulations, you have earned {GetScore()} points.");      
     }
     
 }

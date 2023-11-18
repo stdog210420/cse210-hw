@@ -4,21 +4,18 @@ public class Checklist:Goal
 {
 
     private int _grade;    
-    private  string _goal;
-    private  string _saveGoal;
-    private  string _check;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{GetCheck}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{GetTime()}"; 
-        return _goal;
+        return $"{i}. [{GetCheck}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{GetTime()}"; 
     }
     public override string SaveGoal()
     {
-        _saveGoal = $"CheckListGoal: {GetName()}, {GetDescription()}, {GetScore()}, {GetBonus()}, {GetAchieve()}, {GetTime()}"; 
-        return _saveGoal;
+        return $"CheckListGoal: {GetName()}, {GetDescription()}, {GetScore()}, {GetBonus()}, {GetAchieve()}, {GetTime()}";
     }
-
-
+    public override string ListItem(int i = 0)
+    {
+        return $"{i}.{GetName()}";
+    }
     public override int CalculateScore()
     {
         if (GetAchieve() == 0)
@@ -34,28 +31,18 @@ public class Checklist:Goal
             return _grade;
         }
     }
-    public override string Check()
-    {
-        if (GetAchieve() < GetTime())
-        {
-            return " ";
-        }
-        else if(GetAchieve() == GetTime())
-        {
-            return "X";
-        }     
-            return "X";
-    }
-    public override void IsComplete()
+
+    public override string IsComplete()
     {        
         if (GetAchieve() < GetTime())
         {
-            _check =  " ";
+            return  " ";
         }
         else if(GetAchieve() == GetTime())
         {
-            _check =  "X";
-        }        
+            return  "X";
+        } 
+        return "X";
     }
     public override void RecordEvent()
     {        

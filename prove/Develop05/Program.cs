@@ -8,10 +8,7 @@ using Microsoft.VisualBasic;
 public class Program
 {
     //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
-    public static List<string> _goalList = new List<string>();
-    public static List<string> _saveGoalList = new List<string>();
-    public static string _goal;
-    public static string _saveGoal;
+    private static List<Goal> _goals = new List<Goal>();
     public static int j = 1;
     public static string _item;
     static void Main(string[] args)
@@ -21,9 +18,7 @@ public class Program
         Tracker myTracker = new Tracker();
         string  _choice = "0";
         string _fileName;
-        Simple mySimple = new Simple();
-        Eternal myEternal = new Eternal();
-        Checklist myChecklist = new Checklist();
+
         int _achieve = 0;
 
         while (_choice != "6")
@@ -44,34 +39,37 @@ public class Program
                     {
                         case "1":
                         {
-                            mySimple.CreateNewGoal();
-                            mySimple.CalculateScore();
-                            _goal = mySimple.GetGoal(j);
-                            _saveGoal = mySimple.SaveGoal();                           
+
+                            Goal newGoal = new Simple();
+                            newGoal.CreateNewGoal();
+                            newGoal.CalculateScore();
+                            _goals.Add(newGoal);  // Add the goal to the list
+
+                            j++;                                                  
                             break;
                         }
                         case "2":
                         {
-                            myEternal.CreateNewGoal();
-                            myEternal.CalculateScore();
-                            _goal = myEternal.GetGoal(j);
-                            _saveGoal = myEternal.SaveGoal();    
+                            Goal newGoal = new Eternal();
+                            newGoal.CreateNewGoal();
+                            newGoal.CalculateScore();
+                            _goals.Add(newGoal);  // Add the goal to the list
+
+                            j++;    
                             break;
                         }
                         case "3":
                         {
 
-                            myChecklist.CreateNewGoal();
-                            myChecklist.CreateBonus();
-                            myChecklist.CalculateScore();
-                            _goal = myChecklist.GetGoal(j);
-                            _saveGoal = myChecklist.SaveGoal();    
+                            Goal newGoal = new Checklist();
+                            newGoal.CreateNewGoal();
+                            newGoal.CalculateScore();
+                            _goals.Add(newGoal);  // Add the goal to the list
+
+                            j++;      
                             break;
                         }  
                     }                        
-                    _goalList.Add(_goal);
-                    _saveGoalList.Add(_saveGoal);
-                    j ++;
                     break;
                 }
                 // choice 2. List Goals
@@ -120,19 +118,13 @@ public class Program
 
         }
     }
-
-    // public static void GetGoalList(Goal g)
-    // {   
-    //     _goalList = new List<string>();
-    //     _goalList.Add(g.GetGoal());      
-    // }
     
     public static void ListGoal()
-    {      
+    {     
         Console.WriteLine("\nDisplay all goals:");
-        for (int j = 0; j < _goalList.Count; j++)
+        foreach (var goal in _goals) 
         {
-            Console.WriteLine($"{_goalList[j]}");
+            Console.WriteLine(goal.GetGoal());
         }
     }
     public static void SaveGoal(string FileName)
@@ -148,9 +140,9 @@ public class Program
         using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
             // Write new entries into the file
-            foreach (string _item in _saveGoalList)
+            foreach (var goal in _goals) 
             {
-                outputFile.WriteLine(_item);
+                outputFile.WriteLine(goal.SaveGoal());
             }
         }
         Console.WriteLine("Goals saved successfully in " + FileName);
@@ -173,10 +165,23 @@ public class Program
 
     public static void RecordEvent()
     {
-        Console.WriteLine("Select a choice from the menu: ");
-        _item = Console.ReadLine();
-        Console.WriteLine("The goals are:");
-        Console.WriteLine($"{_goalList}");        
+        Console.WriteLine("The goals are: ");
+        foreach (var goal in _goals)
+        {
+            Console.WriteLine(goal.ListItem());
+        }
+        Console.WriteLine("Which goal did you accomplish? ");
+        int accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
+
+        if (accomplishedGoalIndex >= 0 && accomplishedGoalIndex < _goals.Count)
+        {
+            _goals[accomplishedGoalIndex].RecordEvent();
+        }
+        else
+        {
+            Console.WriteLine("Invalid goal index.");
+        }
+
     }
     
 }

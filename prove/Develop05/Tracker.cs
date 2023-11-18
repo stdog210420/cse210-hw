@@ -21,8 +21,7 @@ public class Tracker
         Console.WriteLine("  1. Simple Goal");
         Console.WriteLine("  2. Eternal Goals");
         Console.WriteLine("  3. Checklist Goals");
-        Console.Write("Which type of goal would you like to create? ");    
-                        
+        Console.Write("Which type of goal would you like to create? ");                          
     }
 
 

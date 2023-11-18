@@ -4,17 +4,18 @@ public class Eternal:Goal
 {
 
     private int _grade;
-    private  string _goal;
-    private  string _saveGoal;
     public override string GetGoal(int i = 0)
     {
-        _goal = $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})"; 
-        return _goal;
+        return $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})"; 
     }
     public override string SaveGoal()
     {
-        _saveGoal = $"EternalGoal: {GetName()}, {GetDescription()}, {GetScore()}"; 
-        return _saveGoal;
+
+        return $"EternalGoal: {GetName()}, {GetDescription()}, {GetScore()}"; 
+    }
+    public override string ListItem(int i = 0)
+    {
+        return $"{i}.{GetName()}";
     }
 
     public override int CalculateScore()
@@ -32,9 +33,9 @@ public class Eternal:Goal
             return _grade;
         }
     }
-    public override void IsComplete()
+    public override string IsComplete()
     {        
-        
+        return "";
     }
     public override void RecordEvent()
     {        
