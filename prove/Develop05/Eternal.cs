@@ -37,8 +37,5 @@ public class Eternal:Goal
     {        
         return "";
     }
-    public override void RecordEvent()
-    {        
-        
-    }   
+ 
 }

@@ -28,7 +28,7 @@ public class Simple:Goal
             Console.WriteLine ($"\nYou have 0 points.");
             _grade = 0;
         }
-        else
+        else if (GetAchieve() == 1)
         {
             _grade += GetScore();
             Console.WriteLine ($"\nYou have {_grade} points.");        
@@ -42,16 +42,11 @@ public class Simple:Goal
         {
             return " "; 
         } 
-        else if (GetAchieve()                                                                                                                                                                   ==1)
-        {                                                                                                                                
+        else
+        {   
+            Console.WriteLine($"The goal {GetName()} was accomplished.");                                                                                                                             
             return "X"; 
-        }
-        return "X";     
-    }
-    public override void RecordEvent()
-    {        
-        Console.WriteLine($"The goal {GetName()} was accomplished.");
-        Console.WriteLine($"Congratulations, you have earned {GetScore()} points.");      
+        }   
     }
     
 }

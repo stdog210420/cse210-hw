@@ -72,15 +72,12 @@ public abstract class Goal
     {
         return _time;
     }
-
     public int GetAchieve()
-    {
+    { 
+        int _achieve = 0;
+        _achieve ++;
         return _achieve;
-    }
-    public void SetAchieve()
-    {
-        _achieve ++;        
-    }
+    }  
     public abstract string GetGoal(int i = 0);
     public abstract string SaveGoal();
     public abstract string ListItem(int i = 0);
@@ -88,6 +85,6 @@ public abstract class Goal
 
     public abstract int CalculateScore();
 
-    public abstract void RecordEvent();
+ 
 
 }

@@ -24,12 +24,21 @@ public class Checklist:Goal
             _grade = 0;
             return _grade;
         }
-        else
+        else if (GetAchieve() < GetTime())
         {
-            _grade += GetScore() * GetAchieve() + GetBonus();
+
+            _grade += GetScore() * GetAchieve();
             Console.WriteLine ($"\nYou have {_grade} points.");        
             return _grade;
         }
+        else if (GetAchieve() == GetTime())
+        {
+
+            _grade += GetScore() + GetBonus();
+            Console.WriteLine ($"\nYou have {_grade} points.");        
+            return _grade;
+        }
+            return _grade;
     }
 
     public override string IsComplete()
@@ -38,14 +47,11 @@ public class Checklist:Goal
         {
             return  " ";
         }
-        else if(GetAchieve() == GetTime())
+        else 
         {
+            Console.WriteLine($"The goal {GetName()} was accomplished.");    
             return  "X";
         } 
-        return "X";
-    }
-    public override void RecordEvent()
-    {        
-        
-    }
+
+    } 
 }

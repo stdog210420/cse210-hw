@@ -175,7 +175,10 @@ public class Program
 
         if (accomplishedGoalIndex >= 0 && accomplishedGoalIndex < _goals.Count)
         {
-            _goals[accomplishedGoalIndex].RecordEvent();
+            _goals[accomplishedGoalIndex].GetAchieve();
+            _goals[accomplishedGoalIndex].IsComplete();
+            Console.WriteLine($"Congratulations! You have earned {_goals[accomplishedGoalIndex].GetScore()} points.");  
+            Console.WriteLine($"You now have {_goals[accomplishedGoalIndex].CalculateScore()} scores.");
         }
         else
         {
