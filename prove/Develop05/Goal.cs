@@ -9,7 +9,6 @@ public abstract class Goal
     private  int _score = 0;
     private  int _time = 0;
     private  int _bonus = 0;
-    private int _check = 0 ;
     public void CreateNewGoal()
     {
         Console.Write("What is name of your goal? ");
@@ -39,10 +38,6 @@ public abstract class Goal
     {
         return _score;
     }
-    public int GetCheck()
-    {
-        return _check;
-    }
     public int GetBonus()
     {
         return _bonus;
@@ -57,11 +52,14 @@ public abstract class Goal
         _achieve ++;
         return _achieve;
     }  
+    public void InitialScore()
+    {
+        Console.WriteLine ($"\nYou have 0 points.");
+    }
     public abstract string GetGoal(int i = 0);
     public abstract string SaveGoal();
     public abstract string ListItem(int i = 0);
     public abstract string IsComplete();
-
     public abstract int CalculateScore();
 
 

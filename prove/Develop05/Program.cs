@@ -42,7 +42,7 @@ public class Program
 
                             Goal newGoal = new Simple();
                             newGoal.CreateNewGoal();
-                            newGoal.CalculateScore();
+                            newGoal.InitialScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;                                                  
@@ -52,7 +52,7 @@ public class Program
                         {
                             Goal newGoal = new Eternal();
                             newGoal.CreateNewGoal();
-                            newGoal.CalculateScore();
+                            newGoal.InitialScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;    
@@ -64,7 +64,7 @@ public class Program
                             Goal newGoal = new Checklist();
                             newGoal.CreateNewGoal();
                             newGoal.CreateBonus();
-                            newGoal.CalculateScore();
+                            newGoal.InitialScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;      
@@ -172,14 +172,16 @@ public class Program
             Console.WriteLine(goal.ListItem());
         }
         Console.WriteLine("Which goal did you accomplish? ");
-        int accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
+        int _accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
+        int _sumScore = 0;
 
-        if (accomplishedGoalIndex >= 0 && accomplishedGoalIndex < _goals.Count)
+        if (_accomplishedGoalIndex >= 0 && _accomplishedGoalIndex < _goals.Count)
         {
-            _goals[accomplishedGoalIndex].GetAchieve();
-            _goals[accomplishedGoalIndex].IsComplete();
-            Console.WriteLine($"Congratulations! You have earned {_goals[accomplishedGoalIndex].GetScore()} points.");  
-            Console.WriteLine($"You now have {_goals[accomplishedGoalIndex].CalculateScore()} scores.");
+            _goals[_accomplishedGoalIndex].GetAchieve();
+            _goals[_accomplishedGoalIndex].IsComplete();
+            _sumScore += _goals[_accomplishedGoalIndex].GetScore();
+            Console.WriteLine($"Congratulations! You have earned {_sumScore} points.");  
+            Console.WriteLine($"You now have {_goals[_accomplishedGoalIndex].CalculateScore()} scores.");
         }
         else
         {

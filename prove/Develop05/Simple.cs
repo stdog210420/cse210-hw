@@ -6,7 +6,7 @@ public class Simple:Goal
     private int _grade;
     public override string GetGoal(int i = 0)
     {
-        return $"{i}. [{GetCheck()}] {GetName()} ({GetDescription()})";
+        return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})";
     }
     public override string SaveGoal()
     {   

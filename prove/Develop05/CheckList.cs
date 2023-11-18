@@ -6,7 +6,7 @@ public class Checklist:Goal
     private int _grade;    
     public override string GetGoal(int i = 0)
     {
-        return $"{i}. [{GetCheck}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{GetTime()}"; 
+        return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve()}/{GetTime()}"; 
     }
     public override string SaveGoal()
     {
