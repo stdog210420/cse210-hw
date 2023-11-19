@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
@@ -10,7 +11,7 @@ public class Program
     //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
     private static List<Goal> _goals = new List<Goal>();
     public static int j = 1;
-    public static string _item;
+    public static int _perform = 0;
     static void Main(string[] args)
     {
         // Design Requirements
@@ -18,9 +19,6 @@ public class Program
         Tracker myTracker = new Tracker();
         string  _choice = "0";
         string _fileName;
-
-        int _achieve = 0;
-
         while (_choice != "6")
         {
             
@@ -42,7 +40,7 @@ public class Program
 
                             Goal newGoal = new Simple();
                             newGoal.CreateNewGoal();
-                            newGoal.InitialScore();
+                            newGoal.CalculateScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;                                                  
@@ -52,7 +50,7 @@ public class Program
                         {
                             Goal newGoal = new Eternal();
                             newGoal.CreateNewGoal();
-                            newGoal.InitialScore();
+                            newGoal.CalculateScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;    
@@ -64,7 +62,7 @@ public class Program
                             Goal newGoal = new Checklist();
                             newGoal.CreateNewGoal();
                             newGoal.CreateBonus();
-                            newGoal.InitialScore();
+                            newGoal.CalculateScore();
                             _goals.Add(newGoal);  // Add the goal to the list
 
                             j++;      
@@ -99,12 +97,7 @@ public class Program
                 // choice 5. Record Events 
                 case "5":
                 {
-                    Console.WriteLine("");
-                    myTracker.CreateGoal();
-                    _choice = Console.ReadLine();
-                    _achieve ++;
-                    // myTracker.RecordEvent();
-
+                    RecordEvent();
                     break;
                 }
                 // choice 6. Quit  
@@ -121,11 +114,13 @@ public class Program
     }
     
     public static void ListGoal()
-    {     
+    {   
+        int i = 0;
         Console.WriteLine("\nDisplay all goals:");
         foreach (var goal in _goals) 
         {
-            Console.WriteLine(goal.GetGoal());
+            i ++;
+            Console.WriteLine(goal.GetGoal(i));
         }
     }
     public static void SaveGoal(string FileName)
@@ -154,13 +149,53 @@ public class Program
         string _FileName = Console.ReadLine();                
         Console.WriteLine("Display all journals from " + _FileName + "：");  
         string[] _lines = File.ReadAllLines(_FileName);
-        foreach (string goal in _lines)
+        for (int i = 0; i < _lines.Length; i++)
         {
-            string[] _parts = goal.Split("");
-            foreach (string part in _parts)
+                Goal goal = CreateGoalFromLine(line);
+            if (goal != null)
             {
-                Console.WriteLine(part);
+                _goals.Add(goal);
             }
+            ListGoal();
+            // string[] _parts = _lines[i].Split("");
+            // foreach (string part in _parts)
+            // {
+            //     Console.WriteLine(part);
+            // }
+        }
+    }
+    public static Goal CreateGoalFromLine(string line)
+    {
+        string[] parts = line.Split(": ");
+
+        if (parts.Length < 2)
+        {
+            Console.WriteLine($"Invalid data format: {line}");
+            return null;
+        }
+
+        string goalType = parts[0];
+        string name = parts[1];
+        string description = parts[2];
+        string score = parts[3];
+        string mark = parts[4];
+        string time = parts[5];
+
+        SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
+EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
+CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
+
+        switch (goalType)
+        {
+            case "SimpleGoal":
+                return GetGoal(goalData);
+            case "EternalGoal":
+                return GetGoal(goalData);
+            case "CheckListGoal":
+                return GetGoal(goalData);
+            default:
+                Console.WriteLine($"Unknown goal type: {goalType}");
+                return null;
         }
     }
 
@@ -174,13 +209,14 @@ public class Program
         Console.WriteLine("Which goal did you accomplish? ");
         int _accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
         int _sumScore = 0;
+        _perform ++;
 
         if (_accomplishedGoalIndex >= 0 && _accomplishedGoalIndex < _goals.Count)
         {
-            _goals[_accomplishedGoalIndex].GetAchieve();
+            _goals[_accomplishedGoalIndex].GetAchieve(_perform);
             _goals[_accomplishedGoalIndex].IsComplete();
             _sumScore += _goals[_accomplishedGoalIndex].GetScore();
-            Console.WriteLine($"Congratulations! You have earned {_sumScore} points.");  
+            Console.WriteLine($"Congratulations! You have earned {_goals[_accomplishedGoalIndex].GetScore()}2 points.");  
             Console.WriteLine($"You now have {_goals[_accomplishedGoalIndex].CalculateScore()} scores.");
         }
         else

@@ -1,3 +1,6 @@
-SimpleGoal: Give a talk, Speak in Sacrament meeting when needed., 50, False
-EternalGoal: Learn English, Get TOEIC high grades., 100
-CheckListGoal: Go to temple, Attend and perform ordinances., 100, 500, 0, 3
+SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 50, false
+EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
+CheckListGoal: Attend the temple, Attend and perform any ordinance., 200, 1000, 0, 3
+SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
+EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
+CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3

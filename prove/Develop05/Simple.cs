@@ -4,14 +4,19 @@ using System.Diagnostics.Contracts;
 public class Simple:Goal
 {
     private int _grade;
+    private int _perform = 0;
     public override string GetGoal(int i = 0)
     {
         return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})";
     }
+    public override string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time)
+    {
+        return $"{i}. {_finished} {_name} ({_description})";
+    }
     public override string SaveGoal()
     {   
         string _finished = "false";
-        if (GetAchieve() != 0)
+        if (GetAchieve(_perform) != 0)
         {
             _finished = "True";
         }
@@ -19,16 +24,16 @@ public class Simple:Goal
     }
     public override string ListItem(int i = 0)
     {
+        i++;
         return $"{i}.{GetName()}";
     }
     public override int CalculateScore()
     {
-        if (GetAchieve() == 0)
+        if (GetAchieve (_perform) == 0)
         {
             Console.WriteLine ($"\nYou have 0 points.");
-            _grade = 0;
         }
-        else if (GetAchieve() == 1)
+        else if(GetAchieve(_perform) == 1)
         {
             _grade += GetScore();
             Console.WriteLine ($"\nYou have {_grade} points.");        
@@ -38,7 +43,7 @@ public class Simple:Goal
 
     public override string IsComplete()
     { 
-        if (GetAchieve()== 0)
+        if (GetAchieve(_perform)== 0)
         {
             return " "; 
         } 

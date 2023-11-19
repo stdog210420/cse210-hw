@@ -46,16 +46,19 @@ public abstract class Goal
     {
         return _time;
     }
-    public int GetAchieve()
+    public int GetAchieve(int perform)
     { 
         int _achieve = 0;
+        if (perform == 0)
+        {
+            _achieve = 0;
+            return _achieve;
+        }
+        else
         _achieve ++;
         return _achieve;
     }  
-    public void InitialScore()
-    {
-        Console.WriteLine ($"\nYou have 0 points.");
-    }
+    public abstract string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time);
     public abstract string GetGoal(int i = 0);
     public abstract string SaveGoal();
     public abstract string ListItem(int i = 0);
