@@ -149,7 +149,7 @@ public class Program
         string _FileName = Console.ReadLine();                
         Console.WriteLine("Display all journals from " + _FileName + "：");  
         string[] _lines = File.ReadAllLines(_FileName);
-        for (int i = 0; i < _lines.Length; i++)
+        foreach (string line in _lines)
         {
                 Goal goal = CreateGoalFromLine(line);
             if (goal != null)
@@ -175,30 +175,77 @@ public class Program
         }
 
         string goalType = parts[0];
-        string name = parts[1];
-        string description = parts[2];
-        string score = parts[3];
-        string mark = parts[4];
-        string time = parts[5];
-
-        SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
-EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
-CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
+        string goalData = parts[1];
 
         switch (goalType)
         {
             case "SimpleGoal":
-                return GetGoal(goalData);
+                return CreateSimpleGoal(goalData);
             case "EternalGoal":
-                return GetGoal(goalData);
+                return CreateEternalGoal(goalData);
             case "CheckListGoal":
-                return GetGoal(goalData);
+                return CreateCheckListGoal(goalData);
             default:
                 Console.WriteLine($"Unknown goal type: {goalType}");
                 return null;
         }
     }
+    public static Simple CreateSimpleGoal(string data)
+    {
+        string mark ;
+        int k = 0;
+        // 将字符串分割成子字符串数组
+        string[] _parts = data.ToString().Split(',');
+        // 移除各个部分的前后空格
+        for (int i = 0; i < _parts.Length; i++)
+        {
+            _parts[i] = _parts[i].Trim();
+        }
+        // 确保我们有足够的部分
+        if (_parts.Length == 4)
+        {
+            string name = _parts[0];
+            string description = _parts[1];
+            int score = int.Parse(_parts[2]);
+            bool finish = bool.Parse(_parts[3]);
 
+
+            // 现在您可以使用这些变量进行后续处理
+            Console.WriteLine($"Name: {name}");
+            Console.WriteLine($"Description: {description}");
+            Console.WriteLine($"Score: {score}");
+            Console.WriteLine($"Mark: {finish}");
+            if (finish)
+            {            
+                mark = "[X]";
+            }
+            else
+            {
+                mark = "[ ]";
+            }
+
+        }
+        else
+        {
+            Console.WriteLine("Invalid data format.");
+        }
+        foreach (string part in _parts)
+        {
+            Console.WriteLine(part);
+        }
+        k ++;
+        // 创建 Simple 实例并返回
+        Simple simpleGoal = new Simple();
+        simpleGoal.SetName(name);
+        simpleGoal.SetDescription(description);
+        simpleGoal.SetScore(score);
+        simpleGoal.SetFinish(finish);
+        return $"{k}. [{mark}] {name} ({description})";
+        // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
+        // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
+        // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
+        
+    }
     public static void RecordEvent()
     {
         Console.WriteLine("The goals are: ");

@@ -26,13 +26,25 @@ public abstract class Goal
         Console.Write("What is bonus for accomplishing it that many times? ");
         _bonus = int.Parse(Console.ReadLine());
     }
+    public void SetName(string name)
+    {
+        _name = name;
+    }
     public string GetName()
     {
         return _name; 
     }
+    public void SetDescription(string description)
+    {
+        _description = description;
+    }
     public string GetDescription()
     {
         return _description;
+    }
+    public void SetScore(int score)
+    {
+        _score = score;
     }
     public int GetScore()
     {
@@ -58,7 +70,7 @@ public abstract class Goal
         _achieve ++;
         return _achieve;
     }  
-    public abstract string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time);
+
     public abstract string GetGoal(int i = 0);
     public abstract string SaveGoal();
     public abstract string ListItem(int i = 0);

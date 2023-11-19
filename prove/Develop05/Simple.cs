@@ -9,10 +9,6 @@ public class Simple:Goal
     {
         return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})";
     }
-    public override string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time)
-    {
-        return $"{i}. {_finished} {_name} ({_description})";
-    }
     public override string SaveGoal()
     {   
         string _finished = "false";
