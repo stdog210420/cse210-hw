@@ -9,6 +9,7 @@ public abstract class Goal
     private  int _score = 0;
     private  int _time = 0;
     private  int _bonus = 0;
+    private  int _achieve = 0;
     public void CreateNewGoal()
     {
         Console.Write("What is name of your goal? ");
@@ -58,9 +59,12 @@ public abstract class Goal
     {
         return _time;
     }
+    public void SetAchieve(int achieve)
+    {
+        _achieve = achieve;
+    }
     public int GetAchieve(int perform)
     { 
-        int _achieve = 0;
         if (perform == 0)
         {
             _achieve = 0;

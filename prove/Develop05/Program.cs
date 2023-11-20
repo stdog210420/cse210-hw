@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
@@ -190,9 +191,9 @@ public class Program
                 return null;
         }
     }
+    public string name;
     public static Simple CreateSimpleGoal(string data)
     {
-        string mark ;
         int k = 0;
         // 将字符串分割成子字符串数组
         string[] _parts = data.ToString().Split(',');
@@ -208,22 +209,26 @@ public class Program
             string description = _parts[1];
             int score = int.Parse(_parts[2]);
             bool finish = bool.Parse(_parts[3]);
-
+            int achieve;
+            if (finish)
+            {            
+                achieve= 1;
+            }
+            else
+            {
+                achieve= 0;
+            }
 
             // 现在您可以使用这些变量进行后续处理
             Console.WriteLine($"Name: {name}");
             Console.WriteLine($"Description: {description}");
             Console.WriteLine($"Score: {score}");
             Console.WriteLine($"Mark: {finish}");
-            if (finish)
-            {            
-                mark = "[X]";
-            }
-            else
-            {
-                mark = "[ ]";
-            }
-
+            // 创建 Simple 实例并返回
+            mySimple.SetName(name);
+            mySimple.SetDescription(description);
+            mySimple.SetScore(score);
+            mySimple.SetAchieve(achieve);
         }
         else
         {
@@ -234,13 +239,7 @@ public class Program
             Console.WriteLine(part);
         }
         k ++;
-        // 创建 Simple 实例并返回
-        Simple simpleGoal = new Simple();
-        simpleGoal.SetName(name);
-        simpleGoal.SetDescription(description);
-        simpleGoal.SetScore(score);
-        simpleGoal.SetFinish(finish);
-        return $"{k}. [{mark}] {name} ({description})";
+        return $"{k}. [{simpleGoal.GetAchieve(achieve)}] {name} ({description})";
         // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
         // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
         // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
