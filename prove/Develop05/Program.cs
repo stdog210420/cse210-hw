@@ -191,7 +191,6 @@ public class Program
                 return null;
         }
     }
-    public string name;
     public static Simple CreateSimpleGoal(string data)
     {
         int k = 0;
@@ -225,6 +224,7 @@ public class Program
             Console.WriteLine($"Score: {score}");
             Console.WriteLine($"Mark: {finish}");
             // 创建 Simple 实例并返回
+            Simple mySimple = new Simple();
             mySimple.SetName(name);
             mySimple.SetDescription(description);
             mySimple.SetScore(score);
@@ -239,7 +239,7 @@ public class Program
             Console.WriteLine(part);
         }
         k ++;
-        return $"{k}. [{simpleGoal.GetAchieve(achieve)}] {name} ({description})";
+        return $"{k}. [{mySimple.GetAchieve(achieve)}] {name} ({description})";
         // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
         // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
         // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
