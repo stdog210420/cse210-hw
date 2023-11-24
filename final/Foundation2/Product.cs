@@ -14,14 +14,14 @@ class Product
     {
         return _productID;
     }
-    public float Price()
-    {
-        return _price;
-    }
-    public int Quantity()
-    {
-        return _quantity;
-    }
+    // public float Price()
+    // {
+    //     return _price;
+    // }
+    // public int Quantity()
+    // {
+    //     return _quantity;
+    // }
 
     public Product (string itemName, int productID, float price, int quantity)
     {   

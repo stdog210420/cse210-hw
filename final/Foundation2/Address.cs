@@ -7,22 +7,22 @@ class Address
     private string _state;
     private string _country;
 
-    public string Street()
-    {
-        return _street;
-    }
-    public string City()
-    {
-        return _city;
-    }
-        public string State()
-    {
-        return _state;
-    }
-        public string Country()
-    {
-        return _country;
-    }
+    // public string Street()
+    // {
+    //     return _street;
+    // }
+    // public string City()
+    // {
+    //     return _city;
+    // }
+    //     public string State()
+    // {
+    //     return _state;
+    // }
+    //     public string Country()
+    // {
+    //     return _country;
+    // }
     public Address (string street, string city, string state, string country)
     {
         _street = street;
