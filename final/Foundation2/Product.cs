@@ -24,7 +24,7 @@ class Product
     }
 
     public Product (string itemName, int productID, float price, int quantity)
-    {
+    {   
         _itemName = itemName;
         _productID = productID;
         _price = price;
