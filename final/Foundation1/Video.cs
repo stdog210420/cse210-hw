@@ -1,7 +1,6 @@
 using System;
 class Video
 {
-    // Comment myComment = new Comment();
     private string _title;
     private string _author;
     private float _length;
@@ -17,6 +16,10 @@ class Video
     public float GetLength()
     {   
         return _length;
+    }
+    public List<Comment> GetComments()
+    {
+        return _commentList;
     }
 
     public Video(string title, string author, float length)
