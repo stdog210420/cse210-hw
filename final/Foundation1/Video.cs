@@ -4,7 +4,7 @@ class Video
     private string _title;
     private string _author;
     private float _length;
-    private List<Comment> _commentList;
+    private List<Comment> _comments;
     public string GetTitle()
     {   
         return _title;
@@ -19,7 +19,7 @@ class Video
     }
     public List<Comment> GetComments()
     {
-        return _commentList;
+        return _comments;
     }
 
     public Video(string title, string author, float length)
@@ -27,17 +27,17 @@ class Video
         _title = title;
         _author = author;
         _length = length;
-        _commentList = new List<Comment>();
+        _comments = new List<Comment>();
     }
     public void AddComment(string author, string text)
     {
         Comment comment = new Comment(author, text);
-        _commentList.Add(comment);
+        _comments.Add(comment);
 
     }
     public int NumberComment()
     {
-        return _commentList.Count;
+        return _comments.Count;
     }
 
 
