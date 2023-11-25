@@ -3,7 +3,7 @@ class Event
 {
     private string _title;
     private string _description;
-    private DateTime _date; 
+    private string _date; 
     private TimeSpan _time;
     private  Address _address;
     // public string Title()
@@ -30,7 +30,9 @@ class Event
     {
         _title = title;
         _description = description;
-        _date = date;
+        string _newDate;
+        _newDate = date.ToString("yyyy/MM/dd");
+        _date = _newDate;
         _time = time;
         _address = address;
     }
