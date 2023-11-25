@@ -14,14 +14,6 @@ class Swimming: Activity
     {
         return Laps() * 50 / 1000;
     }
-    public override float Speed()
-    {
-        return Distance() / timeLength() *60;
-    }
-    public override float Pace()
-    {
-        return timeLength() / Distance();
-    }
     public override string Type()
     {
         return "Swimming";

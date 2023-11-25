@@ -15,10 +15,6 @@ class Cycling: Activity
     {
         return _speed ;
     }
-    public override float Pace()
-    {
-        return timeLength() / Distance();
-    }
     public override string Type()
     {
         return "Cycling";

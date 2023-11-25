@@ -11,14 +11,6 @@ class Running: Activity
     {
         return _distance;
     }
-    public override float Speed()
-    {
-        return Distance() / timeLength() * 60 ;
-    }
-    public override float Pace()
-    {
-        return timeLength() / Distance();
-    }
     public override string Type()
     {
         return "Running";

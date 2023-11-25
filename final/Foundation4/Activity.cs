@@ -44,8 +44,6 @@ class Activity
     {
         return "Activity";
     }
-//     03 Nov 2022 Running (30 min)- Distance 3.0 miles, Speed 6.0 mph, Pace: 10.0 min per mile
-// 03 Nov 2022 Running (30 min): Distance 4.8 km, Speed: 9.7 kph, Pace: 6.9 min per km
     public virtual string GetSummary()
     {
         return $"{Date()} {Type()} ({_timeLength} min)- Distance {Distance()} km, Speed {Speed()} kph, Pace: {Pace()} min per km";
