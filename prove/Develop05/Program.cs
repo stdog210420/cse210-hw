@@ -12,6 +12,7 @@ public class Program
     //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
     private static List<Goal> _goals = new List<Goal>();
     public static int _grade;
+    public static int _itemNO;
     static void Main(string[] args)
     {
         // Design Requirements
@@ -128,7 +129,8 @@ public class Program
         foreach (Goal go in _goals)
         {
             Console.WriteLine($"{go.ListItem()}");
-        }          
+            Console.WriteLine($"You have {go.CalculateScore(_grade)} points.");    
+        }
     }
     public static void SaveGoal(string FileName)
     {
@@ -187,16 +189,15 @@ public class Program
             //_goalData= Give a talk, Speak in Sacrament meeting when asked, 200, flase
             string _goalType = parts[0];
             string _goalData = parts[1];
-            int _goalNo = 0;
 
             switch (_goalType)
             {
                 case "SimpleGoal":
-                    return CreateSimpleGoal(_goalNo, _goalData);
+                    return CreateSimpleGoal(_goalData);
                 case "EternalGoal":
-                    return CreateEternalGoal(_goalNo, _goalData);
+                    return CreateEternalGoal(_goalData);
                 case "CheckListGoal":
-                    return CreateCheckListGoal(_goalNo, _goalData);
+                    return CreateCheckListGoal(_goalData);
                 default:
                     Console.WriteLine($"Unknown goal type: {_goalType}");
                     return null;
@@ -205,9 +206,9 @@ public class Program
         return null;
     }
     // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
-    public static Simple CreateSimpleGoal(int no, string data)
+    public static Simple CreateSimpleGoal(string data)
     {
-        no ++;
+        _itemNO ++;
         // 将字符串分割成子字符串数组
         string[] _parts = data.ToString().Split(',');
         // 移除各个部分的前后空格
@@ -223,13 +224,13 @@ public class Program
             int _loadScore = int.Parse(_parts[2]);
             bool _loadCheck  =bool.Parse(_parts[3]);
             if (_loadCheck)
-            {           
-                Simple loadSimple = new Simple(no, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 1, _loadCheck);
+            {         
+                Simple loadSimple = new Simple(_itemNO, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 1, _loadCheck);
                 return loadSimple;
             }
             else
             {
-                Simple loadSimple = new Simple(no, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 0, _loadCheck);
+                Simple loadSimple = new Simple(_itemNO, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 0, _loadCheck);
                 return loadSimple;
             }
         }
@@ -240,9 +241,9 @@ public class Program
         }
     }
     // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
-    public static Eternal CreateEternalGoal(int no, string data)
+    public static Eternal CreateEternalGoal(string data)
     {
-        no ++;
+        _itemNO ++;
         // 将字符串分割成子字符串数组
         string[] _parts = data.ToString().Split(',');
         // 移除各个部分的前后空格
@@ -251,13 +252,13 @@ public class Program
             _parts[i] = _parts[i].Trim();
         }
         // 确保我们有足够的部分
-        if (_parts.Length == 4)
+        if (_parts.Length == 3)
         {
             string _Loadname = _parts[0];
             string _LoadDescription = _parts[1];
             int _loadScore = int.Parse(_parts[2]);
 
-            Eternal loadEternal = new Eternal(no, "EternalGoal",_Loadname, _LoadDescription, _loadScore, 0);
+            Eternal loadEternal = new Eternal(_itemNO, "EternalGoal",_Loadname, _LoadDescription, _loadScore, 0);
             return loadEternal;
         }
         else
@@ -267,9 +268,9 @@ public class Program
         }
     }
     // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
-    public static CheckList CreateCheckListGoal(int no, string data)
+    public static CheckList CreateCheckListGoal(string data)
     {
-        no ++;
+        _itemNO ++;
         // 将字符串分割成子字符串数组
         string[] _parts = data.ToString().Split(',');
         // 移除各个部分的前后空格
@@ -278,7 +279,7 @@ public class Program
             _parts[i] = _parts[i].Trim();
         }
         // 确保我们有足够的部分
-        if (_parts.Length == 4)
+        if (_parts.Length == 6)
         {
             string _Loadname = _parts[0];
             string _LoadDescription = _parts[1];
@@ -286,7 +287,7 @@ public class Program
             int _loadBonus = int.Parse(_parts[3]);
             int _loadFinish = int.Parse(_parts[4]);
             int _loadTime = int.Parse(_parts[5]);
-            CheckList CheckList = new CheckList(no, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadFinish, _loadTime, _loadFinish, _loadBonus);
+            CheckList CheckList = new CheckList(_itemNO, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadFinish, _loadTime, _loadFinish, _loadBonus);
             return CheckList;
         }
         else

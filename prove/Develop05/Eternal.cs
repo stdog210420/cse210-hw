@@ -2,12 +2,9 @@ using System;
 
 public class Eternal:Goal
 {
-
-    private int _grade;
-    private int _perform = 0;
     public Eternal(int itemNo, string type, string name, string description, int score, int perform):base(itemNo, type, name, description, score, perform)
     {
-        
+            
     }
     public override string ListItem()
     {
