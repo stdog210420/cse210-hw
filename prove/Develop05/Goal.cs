@@ -54,6 +54,6 @@ public abstract class Goal
     }
     public abstract int CalculateScore(int grade);
     public abstract string SaveGoal();
-
+    public abstract bool IsCompleted();
 
 }

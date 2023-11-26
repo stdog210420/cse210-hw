@@ -33,7 +33,8 @@ public class Simple:Goal
         }
         else
         {
-            return $"This goal has completed.";
+            Console.WriteLine ($"This goal has completed.");
+            return $"{ItemNo()}. [X] {Name()} ({Description()})";
         }
     }
     public override int CalculateScore(int grade)
@@ -48,12 +49,20 @@ public class Simple:Goal
             grade  +=  SimplePerform() * Score();
             return grade;
         }
-        Console.WriteLine($"This goal has completed.");
         return grade;
     }
     public override string SaveGoal()  
     {
         return $"{Type()}: {Name()}, {Description()}, {Score()}, {Check()}";
+    }
+    public override bool IsCompleted()
+    {
+        if (SimplePerform() >= 1)
+        {
+            Console.WriteLine($"This goal has completed.");
+            return true;
+        }
+        return false;
     }
 
 }

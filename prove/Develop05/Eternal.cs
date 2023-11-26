@@ -36,6 +36,9 @@ public class Eternal:Goal
     {
         return $"{Type()}: {Name()}, {Description()}, {Score()}";
     }
-
+    public override bool IsCompleted()
+    {
+        return false;
+    }
 
 }

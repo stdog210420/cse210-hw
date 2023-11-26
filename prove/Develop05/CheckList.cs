@@ -39,7 +39,8 @@ public class CheckList:Goal
         }
         else
         {
-            return $"This goal has completed.";
+            Console.WriteLine($"This goal has completed.");
+            return $"{ItemNo()}. [X] {Name()} ({Description()}) -- Currently completed: {CheckListPerform()}/{Time()} ";
         }
     }
     public override int CalculateScore(int grade)
@@ -59,11 +60,19 @@ public class CheckList:Goal
             grade  += Bonus();
             return grade;
         }
-        Console.WriteLine($"This goal has completed.");
         return grade;
     }
     public override string SaveGoal()  
     {
         return $"{Type()}: {Name()}, {Description()}, {Score()}, {Bonus()}, {Time()}, {CheckListPerform()}";
+    }
+    public override bool IsCompleted()
+    {
+        if (CheckListPerform() >= Time())
+        {
+            Console.WriteLine($"This goal has completed.");
+            return true;
+        }
+        return false;
     }
 }
