@@ -5,42 +5,31 @@ public class Eternal:Goal
 
     private int _grade;
     private int _perform = 0;
-    public override string GetGoal(int i = 0)
+    public Eternal(int itemNo, string type, string name, string description, int score, int perform):base(itemNo, type, name, description, score, perform)
     {
-        return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})"; 
+        
     }
-    public override string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time)
+    public override string ListItem()
     {
-        return $"{i}. {_finished} {_name} ({_description})";
+        return $"{ItemNo()}. [ ] {Name()} ({Description()})";
     }
-    public override string SaveGoal()
+    public override int CalculateScore(int grade)
     {
-
-        return $"EternalGoal: {GetName()}, {GetDescription()}, {GetScore()}"; 
-    }
-    public override string ListItem(int i = 0)
-    {
-        return $"{i}.{GetName()}";
-    }
-
-    public override int CalculateScore()
-    {
-        if (GetAchieve(_perform) == 0)
+        if (Perform() ==0)
         {
-            Console.WriteLine ($"\nYou have 0 points.");
-            _grade = 0;
-            return _grade;
+            grade = 0;
+            return grade;
         }
-        else
+        else 
         {
-            _grade += GetScore() * GetAchieve(_perform);
-            Console.WriteLine ($"\nYou have {_grade} points.");        
-            return _grade;
+            grade  +=  Perform() * Score();
+            return grade;
         }
     }
-    public override string IsComplete()
-    {        
-        return " ";
+    public override string SaveGoal()  
+    {
+        return $"{Type()}: {Name()}, {Description()}, {Score()}";
     }
+
 
 }

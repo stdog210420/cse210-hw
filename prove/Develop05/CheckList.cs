@@ -1,63 +1,65 @@
 using System;
 using System.Data;
 
-public class Checklist:Goal
+public class CheckList:Goal
 {
-
-    private int _grade;    
-    private int _perform = 0;
-    public override string GetGoal(int i = 0)
+    private int _time;    
+    private int _finish; 
+    private int _bonus;
+    public int Time()
     {
-        return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})--Currently completed {GetAchieve(_perform)}/{GetTime()}"; 
+        return _time;
     }
-    public override string LoadGoal(int i, string _finished, string _name, string _description, int _score, int bonus, int time)
+    public int Finish()
     {
-        return $"{i}. {_finished} {_name} ({_description}--Currently completed {GetAchieve(_perform)}/{GetTime()})";
+        return _finish;
     }
-    public override string SaveGoal()
+    public int Bonus()
     {
-        return $"CheckListGoal: {GetName()}, {GetDescription()}, {GetScore()}, {GetBonus()}, {GetAchieve(_perform)}, {GetTime()}";
+        return _bonus;
     }
-    public override string ListItem(int i = 0)
-    {
-        return $"{i}.{GetName()}";
+    public CheckList(int itemNo, string type, string name, string description, int score, int perform, int time, int finish, int bonus):base(itemNo, type, name, description, score, perform)
+    {   
+        _time = time;
+        _finish = finish; 
+        _bonus = bonus;
     }
-    public override int CalculateScore()
+    public override string ListItem()
     {
-        if (GetAchieve(_perform) == 0)
+        if (Perform() < Time())
         {
-            Console.WriteLine ($"\nYou have 0 points.");
-            _grade = 0;
-            return _grade;
+        return $"{ItemNo()}. [ ] {Name()} ({Description()}) -- Currently completed: {Finish()}/{Time()} ";            
         }
-        else if (GetAchieve(_perform) < GetTime())
+        else if (Perform() == Time())
         {
-
-            _grade += GetScore() * GetAchieve(_perform);
-            Console.WriteLine ($"\nYou have {_grade} points.");        
-            return _grade;
+            return $"{ItemNo()}. [X] {Name()} ({Description()}) -- Currently completed: {Finish()}/{Time()} ";
         }
-        else if (GetAchieve(_perform) == GetTime())
+        else
         {
-
-            _grade += GetScore() + GetBonus();
-            Console.WriteLine ($"\nYou have {_grade} points.");        
-            return _grade;
+            return $"This goal has completed.";
         }
-            return _grade;
     }
-
-    public override string IsComplete()
-    {        
-        if (GetAchieve(_perform) < GetTime())
+    public override int CalculateScore(int grade)
+    {
+        if (Perform() ==0)
         {
-            return  " ";
+            grade = 0;
+            return grade;
         }
-        else 
+        else if (Perform() < Time())
         {
-            Console.WriteLine($"The goal {GetName()} was accomplished.");    
-            return  "X";
-        } 
-
-    } 
+            grade  +=  Perform() * Score();
+            return grade;
+        }
+        else if (Perform() == Time())
+        {
+            grade  +=  Perform() * Score() + Bonus();
+            return grade;
+        }
+        return grade;
+    }
+    public override string SaveGoal()  
+    {
+        return $"{Type()}: {Name()}, {Description()}, {Score()}, {Bonus()}, {Time()}, {Finish()}";
+    }
 }

@@ -4,82 +4,56 @@ using System.IO;
 
 public abstract class Goal
 {   
+    private int _itemNo;
     private  string _name;
     private  string _description;
     private  int _score = 0;
-    private  int _time = 0;
-    private  int _bonus = 0;
-    private  int _achieve = 0;
-    public void CreateNewGoal()
+    private string _type;
+    private int _perform;
+    public int ItemNo()
     {
-        Console.Write("What is name of your goal? ");
-        _name = Console.ReadLine();        
-        Console.Write("What is a short description of it? ");
-        _description = Console.ReadLine();
-        Console.Write("What is the amount of points associated with this goal? ");
-        _score = int.Parse(Console.ReadLine());
+        return _itemNo;
     }
-
-    public void CreateBonus()
+    public string Name()
     {
-        Console.Write("How many times does this goal need to be accomplished for a bonus ? ");
-        _time = int.Parse(Console.ReadLine());
-        Console.Write("What is bonus for accomplishing it that many times? ");
-        _bonus = int.Parse(Console.ReadLine());
+        return _name;
     }
-    public void SetName(string name)
-    {
-        _name = name;
-    }
-    public string GetName()
-    {
-        return _name; 
-    }
-    public void SetDescription(string description)
-    {
-        _description = description;
-    }
-    public string GetDescription()
+    public string Description()
     {
         return _description;
     }
-    public void SetScore(int score)
-    {
-        _score = score;
-    }
-    public int GetScore()
+    public int Score()
     {
         return _score;
     }
-    public int GetBonus()
+    public string Type()
     {
-        return _bonus;
+        return _type;
     }
-    public int GetTime()
+    public void SetPerform(int perform)
     {
-        return _time;
+        _perform += perform;
     }
-    public void SetAchieve(int achieve)
+    public int Perform()
     {
-        _achieve = achieve;
+        return _perform;
     }
-    public int GetAchieve(int perform)
-    { 
-        if (perform == 0)
-        {
-            _achieve = 0;
-            return _achieve;
-        }
-        else
-        _achieve ++;
-        return _achieve;
-    }  
 
-    public abstract string GetGoal(int i = 0);
+    public Goal(int itemNo, string type, string name, string description, int score, int perform)
+    {   
+        _itemNo = itemNo;
+        _type = type;
+        _name = name;
+        _description = description;
+        _score = score;
+        _perform = perform;
+    } 
+    public virtual string ListItem()
+    {
+        return $"{ItemNo()}. [ ] {Name()} ({Description()})";
+    }
+    public abstract int CalculateScore(int grade);
     public abstract string SaveGoal();
-    public abstract string ListItem(int i = 0);
-    public abstract string IsComplete();
-    public abstract int CalculateScore();
 
 
 }

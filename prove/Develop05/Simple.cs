@@ -3,51 +3,48 @@ using System.Diagnostics.Contracts;
 
 public class Simple:Goal
 {
-    private int _grade;
-    private int _perform = 0;
-    public override string GetGoal(int i = 0)
+    private bool _check;
+    public bool Check()
     {
-        return $"{i}. [{IsComplete()}] {GetName()} ({GetDescription()})";
+        return _check;
     }
-    public override string SaveGoal()
-    {   
-        string _finished = "false";
-        if (GetAchieve(_perform) != 0)
-        {
-            _finished = "True";
-        }
-        return $"SimpleGoal: {GetName()}, {GetDescription()}, {GetScore()}, {_finished}"; 
-    }
-    public override string ListItem(int i = 0)
+    public Simple(int itemNo, string type, string name, string description, int score, int perform, bool check):base(itemNo, type, name, description, score, perform)
     {
-        i++;
-        return $"{i}.{GetName()}";
+        _check = check;
     }
-    public override int CalculateScore()
+    public override string ListItem()
     {
-        if (GetAchieve (_perform) == 0)
+        if (Perform() == 0)
         {
-            Console.WriteLine ($"\nYou have 0 points.");
-        }
-        else if(GetAchieve(_perform) == 1)
-        {
-            _grade += GetScore();
-            Console.WriteLine ($"\nYou have {_grade} points.");        
-        }
-        return _grade;
-    }
-
-    public override string IsComplete()
-    { 
-        if (GetAchieve(_perform)== 0)
-        {
-            return " "; 
+            return $"{ItemNo()}. [ ] {Name()} ({Description()})";
         } 
+        else if (Perform() == 1)
+        {
+            return $"{ItemNo()}. [X] {Name()} ({Description()})";
+        }
         else
-        {   
-            Console.WriteLine($"The goal {GetName()} was accomplished.");                                                                                                                             
-            return "X"; 
-        }   
+        {
+            return $"This goal has completed.";
+        }
+    }
+    public override int CalculateScore(int grade)
+    {
+        if (Perform() ==0)
+        {
+            grade = 0;
+            return grade;
+        }
+        else if (Perform() ==1)
+        {
+            grade  +=  Perform() * Score();
+            return grade;
+        }
+        else 
+        return grade;
+    }
+    public override string SaveGoal()  
+    {
+        return $"{Type()}: {Name()}, {Description()}, {Score()}, {Check()}";
     }
     
 }

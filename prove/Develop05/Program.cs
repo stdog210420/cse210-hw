@@ -11,62 +11,74 @@ public class Program
 {
     //在使用 _goalList 之前確保它不是 null，可以在程式開始時初始化它。
     private static List<Goal> _goals = new List<Goal>();
-    public static int j = 1;
-    public static int _perform = 0;
+    public static int _grade;
     static void Main(string[] args)
     {
         // Design Requirements
-
-        Tracker myTracker = new Tracker();
         string  _choice = "0";
         string _fileName;
         while (_choice != "6")
-        {
-            
-            Console.ForegroundColor = ConsoleColor.Blue;            
-            myTracker.TrackerOptions();
+        {            
+            Console.ForegroundColor = ConsoleColor.Blue;    
+            Console.WriteLine("\nMenu Options:");              
+            Console.WriteLine("  1. Create New Goal");
+            Console.WriteLine("  2. List Goals");
+            Console.WriteLine("  3. Save Goals");
+            Console.WriteLine("  4. Load Goals");
+            Console.WriteLine("  5. Record Events"); 
+            Console.WriteLine("  6. Quit"); 
+            Console.Write("Select a choice from the menu: "); 
             _choice = Console.ReadLine();
             switch(_choice)
             {
                 // choice 1. Create New Goal
                 case "1":
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;            
-                    myTracker.CreateGoal();
+                {        
+                    Console.ForegroundColor = ConsoleColor.Blue;    
+                    Console.WriteLine("\nThe types of Goals are:");              
+                    Console.WriteLine("  1. Simple Goal");
+                    Console.WriteLine("  2. Eternal Goals");
+                    Console.WriteLine("  3. Checklist Goals");
+                    Console.Write("Which type of goal would you like to create? ");
                     _choice = Console.ReadLine();
+                    Console.Write("What is name of your goal? ");
+                    string _name = Console.ReadLine();        
+                    Console.Write("What is a short description of it? ");
+                    string _description = Console.ReadLine();
+                    Console.Write("What is the amount of points associated with this goal? ");
+                    int _score = int.Parse(Console.ReadLine());
+                    int _itemNo = 0;
                     switch(_choice)
                     {
                         case "1":
                         {
-
-                            Goal newGoal = new Simple();
-                            newGoal.CreateNewGoal();
-                            newGoal.CalculateScore();
-                            _goals.Add(newGoal);  // Add the goal to the list
-
-                            j++;                                                  
+                            _itemNo ++;
+                            string _type = "SimpleGoal";
+                            Simple simple = new Simple(_itemNo, _type, _name, _description, _score, 0, false);
+                            Console.WriteLine($"You have {simple.CalculateScore(_grade)} points.");
+                            _goals.Add(simple);  // Add the goal to the list                                                 
                             break;
                         }
                         case "2":
                         {
-                            Goal newGoal = new Eternal();
-                            newGoal.CreateNewGoal();
-                            newGoal.CalculateScore();
-                            _goals.Add(newGoal);  // Add the goal to the list
-
-                            j++;    
+                            _itemNo ++;
+                            string _type = "EternalGoal";
+                            Eternal eternal = new Eternal(_itemNo, _type, _name, _description, _score, 0);
+                            Console.WriteLine($"You have {eternal.CalculateScore(_grade)} points.");
+                            _goals.Add(eternal);  // Add the goal to the list 
                             break;
                         }
                         case "3":
                         {
-
-                            Goal newGoal = new Checklist();
-                            newGoal.CreateNewGoal();
-                            newGoal.CreateBonus();
-                            newGoal.CalculateScore();
-                            _goals.Add(newGoal);  // Add the goal to the list
-
-                            j++;      
+                            _itemNo ++;
+                            Console.Write("How many times does this goal need to be accomplished for a bonus ? ");
+                            int _time = int.Parse(Console.ReadLine());
+                            Console.Write("What is bonus for accomplishing it that many times? ");
+                            int _bonus = int.Parse(Console.ReadLine());
+                            string _type = "CheckListGoal";
+                            CheckList checkList = new CheckList(_itemNo, _type, _name, _description, _score, 0, _time, 0, _bonus);
+                            Console.WriteLine($"You have {checkList.CalculateScore(_grade)} points.");
+                            _goals.Add(checkList);  // Add the goal to the list     
                             break;
                         }  
                     }                        
@@ -75,9 +87,7 @@ public class Program
                 // choice 2. List Goals
                 case "2":
                 {                
-                    
                     ListGoal();
-                    
                     break;
                 }
                 // choice 3. Save Goals  
@@ -92,7 +102,6 @@ public class Program
                 case "4":
                 {
                     LoadGoal();
-
                     break;
                 }
                 // choice 5. Record Events 
@@ -113,16 +122,13 @@ public class Program
 
         }
     }
-    
     public static void ListGoal()
-    {   
-        int i = 0;
-        Console.WriteLine("\nDisplay all goals:");
-        foreach (var goal in _goals) 
+    {
+        Console.WriteLine("The goals are: ");
+        foreach (Goal go in _goals)
         {
-            i ++;
-            Console.WriteLine(goal.GetGoal(i));
-        }
+            Console.WriteLine($"{go.ListItem()}");
+        }          
     }
     public static void SaveGoal(string FileName)
     {
@@ -136,7 +142,9 @@ public class Program
         // Open the file in append mode, create it if it doesn't exist.
         using (StreamWriter outputFile = new StreamWriter(FileName, true)) // 使用 true 參數表示追加模式
         {
-            // Write new entries into the file
+            //write grade in the first line
+            outputFile.WriteLine(_grade);
+            // Write new goals into the file
             foreach (var goal in _goals) 
             {
                 outputFile.WriteLine(goal.SaveGoal());
@@ -152,48 +160,54 @@ public class Program
         string[] _lines = File.ReadAllLines(_FileName);
         foreach (string line in _lines)
         {
-                Goal goal = CreateGoalFromLine(line);
-            if (goal != null)
+            if (int.TryParse(line, out int grade))
             {
-                _goals.Add(goal);
+                _grade = grade;
             }
-            ListGoal();
-            // string[] _parts = _lines[i].Split("");
-            // foreach (string part in _parts)
-            // {
-            //     Console.WriteLine(part);
-            // }
+            else
+            {
+                Goal goal = CreateGoalFromLine(line);
+                if (goal != null)
+                {
+                    _goals.Add(goal);
+                }
+            }
         }
+        // 现在_goals列表包含從文件中加載的所有目標
+        ListGoal();
     }
     public static Goal CreateGoalFromLine(string line)
     {
         string[] parts = line.Split(": ");
 
-        if (parts.Length < 2)
+        if (parts.Length > 1)
         {
-            Console.WriteLine($"Invalid data format: {line}");
-            return null;
-        }
+            // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
+            //_goalType= SimpleGoal
+            //_goalData= Give a talk, Speak in Sacrament meeting when asked, 200, flase
+            string _goalType = parts[0];
+            string _goalData = parts[1];
+            int _goalNo = 0;
 
-        string goalType = parts[0];
-        string goalData = parts[1];
-
-        switch (goalType)
-        {
-            case "SimpleGoal":
-                return CreateSimpleGoal(goalData);
-            case "EternalGoal":
-                return CreateEternalGoal(goalData);
-            case "CheckListGoal":
-                return CreateCheckListGoal(goalData);
-            default:
-                Console.WriteLine($"Unknown goal type: {goalType}");
-                return null;
+            switch (_goalType)
+            {
+                case "SimpleGoal":
+                    return CreateSimpleGoal(_goalNo, _goalData);
+                case "EternalGoal":
+                    return CreateEternalGoal(_goalNo, _goalData);
+                case "CheckListGoal":
+                    return CreateCheckListGoal(_goalNo, _goalData);
+                default:
+                    Console.WriteLine($"Unknown goal type: {_goalType}");
+                    return null;
+            }
         }
+        return null;
     }
-    public static Simple CreateSimpleGoal(string data)
+    // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
+    public static Simple CreateSimpleGoal(int no, string data)
     {
-        int k = 0;
+        no ++;
         // 将字符串分割成子字符串数组
         string[] _parts = data.ToString().Split(',');
         // 移除各个部分的前后空格
@@ -204,46 +218,82 @@ public class Program
         // 确保我们有足够的部分
         if (_parts.Length == 4)
         {
-            string name = _parts[0];
-            string description = _parts[1];
-            int score = int.Parse(_parts[2]);
-            bool finish = bool.Parse(_parts[3]);
-            int achieve;
-            if (finish)
-            {            
-                achieve= 1;
+            string _Loadname = _parts[0];
+            string _LoadDescription = _parts[1];
+            int _loadScore = int.Parse(_parts[2]);
+            bool _loadCheck  =bool.Parse(_parts[3]);
+            if (_loadCheck)
+            {           
+                Simple loadSimple = new Simple(no, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 1, _loadCheck);
+                return loadSimple;
             }
             else
             {
-                achieve= 0;
+                Simple loadSimple = new Simple(no, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 0, _loadCheck);
+                return loadSimple;
             }
-
-            // 现在您可以使用这些变量进行后续处理
-            Console.WriteLine($"Name: {name}");
-            Console.WriteLine($"Description: {description}");
-            Console.WriteLine($"Score: {score}");
-            Console.WriteLine($"Mark: {finish}");
-            // 创建 Simple 实例并返回
-            Simple mySimple = new Simple();
-            mySimple.SetName(name);
-            mySimple.SetDescription(description);
-            mySimple.SetScore(score);
-            mySimple.SetAchieve(achieve);
         }
         else
         {
             Console.WriteLine("Invalid data format.");
+            return null;
         }
-        foreach (string part in _parts)
+    }
+    // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
+    public static Eternal CreateEternalGoal(int no, string data)
+    {
+        no ++;
+        // 将字符串分割成子字符串数组
+        string[] _parts = data.ToString().Split(',');
+        // 移除各个部分的前后空格
+        for (int i = 0; i < _parts.Length; i++)
         {
-            Console.WriteLine(part);
+            _parts[i] = _parts[i].Trim();
         }
-        k ++;
-        return $"{k}. [{mySimple.GetAchieve(achieve)}] {name} ({description})";
-        // SimpleGoal: Give a talk, Speak in Sacrament meeting when asked., 200, false
-        // EternalGoal: Study scripture, Study scripture for 10 minutes every day., 50
-        // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
-        
+        // 确保我们有足够的部分
+        if (_parts.Length == 4)
+        {
+            string _Loadname = _parts[0];
+            string _LoadDescription = _parts[1];
+            int _loadScore = int.Parse(_parts[2]);
+
+            Eternal loadEternal = new Eternal(no, "EternalGoal",_Loadname, _LoadDescription, _loadScore, 0);
+            return loadEternal;
+        }
+        else
+        {
+            Console.WriteLine("Invalid data format.");
+            return null;
+        }
+    }
+    // CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 0, 3
+    public static CheckList CreateCheckListGoal(int no, string data)
+    {
+        no ++;
+        // 将字符串分割成子字符串数组
+        string[] _parts = data.ToString().Split(',');
+        // 移除各个部分的前后空格
+        for (int i = 0; i < _parts.Length; i++)
+        {
+            _parts[i] = _parts[i].Trim();
+        }
+        // 确保我们有足够的部分
+        if (_parts.Length == 4)
+        {
+            string _Loadname = _parts[0];
+            string _LoadDescription = _parts[1];
+            int _loadScore = int.Parse(_parts[2]);
+            int _loadBonus = int.Parse(_parts[3]);
+            int _loadFinish = int.Parse(_parts[4]);
+            int _loadTime = int.Parse(_parts[5]);
+            CheckList CheckList = new CheckList(no, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadFinish, _loadTime, _loadFinish, _loadBonus);
+            return CheckList;
+        }
+        else
+        {
+            Console.WriteLine("Invalid data format.");
+            return null;
+        }
     }
     public static void RecordEvent()
     {
@@ -254,16 +304,12 @@ public class Program
         }
         Console.WriteLine("Which goal did you accomplish? ");
         int _accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
-        int _sumScore = 0;
-        _perform ++;
-
         if (_accomplishedGoalIndex >= 0 && _accomplishedGoalIndex < _goals.Count)
         {
-            _goals[_accomplishedGoalIndex].GetAchieve(_perform);
-            _goals[_accomplishedGoalIndex].IsComplete();
-            _sumScore += _goals[_accomplishedGoalIndex].GetScore();
-            Console.WriteLine($"Congratulations! You have earned {_goals[_accomplishedGoalIndex].GetScore()}2 points.");  
-            Console.WriteLine($"You now have {_goals[_accomplishedGoalIndex].CalculateScore()} scores.");
+            _goals[_accomplishedGoalIndex].SetPerform (1);
+            _grade += _goals[_accomplishedGoalIndex].CalculateScore(_grade);
+            Console.WriteLine($"Congratulations! You have earned {_goals[_accomplishedGoalIndex].Score()} points.");  
+            Console.WriteLine($"You now have {_goals[_accomplishedGoalIndex].CalculateScore(_grade)} scores.");
         }
         else
         {

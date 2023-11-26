@@ -16,12 +16,12 @@ public class Tracker
     }   
     public void CreateGoal()
     {
-        Console.ForegroundColor = ConsoleColor.Blue;    
-        Console.WriteLine("\nThe types of Goals are:");              
-        Console.WriteLine("  1. Simple Goal");
-        Console.WriteLine("  2. Eternal Goals");
-        Console.WriteLine("  3. Checklist Goals");
-        Console.Write("Which type of goal would you like to create? ");                          
+        Console.Write("What is name of your goal? ");
+        string _name = Console.ReadLine();        
+        Console.Write("What is a short description of it? ");
+        string _description = Console.ReadLine();
+        Console.Write("What is the amount of points associated with this goal? ");
+        int _score = int.Parse(Console.ReadLine());                     
     }
 
 
