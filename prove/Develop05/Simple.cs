@@ -48,7 +48,7 @@ public class Simple:Goal
             grade  +=  SimplePerform() * Score();
             return grade;
         }
-        else 
+        Console.WriteLine($"This goal has completed.");
         return grade;
     }
     public override string SaveGoal()  

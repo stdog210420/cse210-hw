@@ -2,7 +2,7 @@ using System;
 
 public class Eternal:Goal
 {
-    private int _perform;
+    private int _perform = 0;
     public override void SetPerform(int perform)
     {
         _perform += perform;

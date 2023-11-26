@@ -51,14 +51,15 @@ public class CheckList:Goal
         }
         else if (CheckListPerform() < Time())
         {
-            grade  +=  CheckListPerform() * Score();
+            grade  += Score();
             return grade;
         }
         else if (CheckListPerform() == Time())
         {
-            grade  +=  CheckListPerform() * Score() + Bonus();
+            grade  += Bonus();
             return grade;
         }
+        Console.WriteLine($"This goal has completed.");
         return grade;
     }
     public override string SaveGoal()  

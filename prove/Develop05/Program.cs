@@ -308,7 +308,7 @@ public class Program
         if (_accomplishedGoalIndex >= 0 && _accomplishedGoalIndex < _goals.Count)
         {
             _goals[_accomplishedGoalIndex].SetPerform (1);
-            _grade += _goals[_accomplishedGoalIndex].CalculateScore(_grade);
+            _grade = _goals[_accomplishedGoalIndex].CalculateScore(_grade);
             Console.WriteLine($"Congratulations! You have earned {_goals[_accomplishedGoalIndex].Score()} points.");  
             Console.WriteLine($"You now have {_grade} scores.");
         }
