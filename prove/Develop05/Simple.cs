@@ -4,9 +4,18 @@ using System.Diagnostics.Contracts;
 public class Simple:Goal
 {
     private bool _check;
+    private int _perform;
     public bool Check()
     {
         return _check;
+    }
+    public override void SetPerform(int perform)
+    {
+        _perform += perform;
+    }
+    public int SimplePerform()
+    {
+        return _perform;
     }
     public Simple(int itemNo, string type, string name, string description, int score, int perform, bool check):base(itemNo, type, name, description, score, perform)
     {
@@ -14,11 +23,11 @@ public class Simple:Goal
     }
     public override string ListItem()
     {
-        if (Perform() == 0)
+        if (SimplePerform()== 0)
         {
             return $"{ItemNo()}. [ ] {Name()} ({Description()})";
         } 
-        else if (Perform() == 1)
+        else if (SimplePerform() == 1)
         {
             return $"{ItemNo()}. [X] {Name()} ({Description()})";
         }
@@ -29,14 +38,14 @@ public class Simple:Goal
     }
     public override int CalculateScore(int grade)
     {
-        if (Perform() ==0)
+        if (SimplePerform() ==0)
         {
             grade = 0;
             return grade;
         }
-        else if (Perform() ==1)
+        else if (SimplePerform() ==1)
         {
-            grade  +=  Perform() * Score();
+            grade  +=  SimplePerform() * Score();
             return grade;
         }
         else 
@@ -46,5 +55,5 @@ public class Simple:Goal
     {
         return $"{Type()}: {Name()}, {Description()}, {Score()}, {Check()}";
     }
-    
+
 }

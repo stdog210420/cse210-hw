@@ -30,7 +30,7 @@ public abstract class Goal
     {
         return _type;
     }
-    public void SetPerform(int perform)
+    public virtual void SetPerform(int perform)
     {
         _perform += perform;
     }

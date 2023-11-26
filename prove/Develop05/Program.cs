@@ -77,7 +77,7 @@ public class Program
                             Console.Write("What is bonus for accomplishing it that many times? ");
                             int _bonus = int.Parse(Console.ReadLine());
                             string _type = "CheckListGoal";
-                            CheckList checkList = new CheckList(_itemNo, _type, _name, _description, _score, 0, _time, 0, _bonus);
+                            CheckList checkList = new CheckList(_itemNo, _type, _name, _description, _score, 0, _time, _bonus);
                             Console.WriteLine($"You have {checkList.CalculateScore(_grade)} points.");
                             _goals.Add(checkList);  // Add the goal to the list     
                             break;
@@ -129,8 +129,8 @@ public class Program
         foreach (Goal go in _goals)
         {
             Console.WriteLine($"{go.ListItem()}");
-            Console.WriteLine($"You have {go.CalculateScore(_grade)} points.");    
         }
+        Console.WriteLine($"You have {_grade} points.");  
     }
     public static void SaveGoal(string FileName)
     {
@@ -285,9 +285,9 @@ public class Program
             string _LoadDescription = _parts[1];
             int _loadScore = int.Parse(_parts[2]);
             int _loadBonus = int.Parse(_parts[3]);
-            int _loadFinish = int.Parse(_parts[4]);
+            int _loadPerform = int.Parse(_parts[4]);
             int _loadTime = int.Parse(_parts[5]);
-            CheckList CheckList = new CheckList(_itemNO, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadFinish, _loadTime, _loadFinish, _loadBonus);
+            CheckList CheckList = new CheckList(_itemNO, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadPerform, _loadTime, _loadBonus);
             return CheckList;
         }
         else
@@ -303,14 +303,14 @@ public class Program
         {
             Console.WriteLine(goal.ListItem());
         }
-        Console.WriteLine("Which goal did you accomplish? ");
+        Console.Write("Which goal did you accomplish? ");
         int _accomplishedGoalIndex = int.Parse(Console.ReadLine()) - 1;
         if (_accomplishedGoalIndex >= 0 && _accomplishedGoalIndex < _goals.Count)
         {
             _goals[_accomplishedGoalIndex].SetPerform (1);
             _grade += _goals[_accomplishedGoalIndex].CalculateScore(_grade);
             Console.WriteLine($"Congratulations! You have earned {_goals[_accomplishedGoalIndex].Score()} points.");  
-            Console.WriteLine($"You now have {_goals[_accomplishedGoalIndex].CalculateScore(_grade)} scores.");
+            Console.WriteLine($"You now have {_grade} scores.");
         }
         else
         {
