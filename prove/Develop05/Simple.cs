@@ -19,6 +19,7 @@ public class Simple:Goal
     }
     public Simple(int itemNo, string type, string name, string description, int score, int perform, bool check):base(itemNo, type, name, description, score, perform)
     {
+        _perform = perform;
         _check = check;
     }
     public override string ListItem()
@@ -29,6 +30,7 @@ public class Simple:Goal
         } 
         else if (SimplePerform() == 1)
         {
+            _check = true;
             return $"{ItemNo()}. [X] {Name()} ({Description()})";
         }
         else

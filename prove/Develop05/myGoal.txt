@@ -1,1 +1,6 @@
-
+2080
+SimpleGoal: Give a talk, Speak in Sacrament meeting when asked, 500, True
+EternalGoal: Study scripture, Study 10 minutes everyday, 50
+CheckListGoal: Attend the temple, Attend and perform any ordinance, 200, 1000, 3, 3
+EternalGoal: Sleep early, Sleep before midnight everyday, 80
+CheckListGoal: Practice ballet, Practice at least 3 times before performing, 300, 1000, 3, 0

@@ -18,7 +18,7 @@ public class Program
         // Design Requirements
         string  _choice = "0";
         string _fileName;
-        while (_choice != "6")
+        while (_choice != "7")
         {            
             Console.ForegroundColor = ConsoleColor.Blue;    
             Console.WriteLine("\nMenu Options:");              
@@ -27,7 +27,8 @@ public class Program
             Console.WriteLine("  3. Save Goals");
             Console.WriteLine("  4. Load Goals");
             Console.WriteLine("  5. Record Events"); 
-            Console.WriteLine("  6. Quit"); 
+            Console.WriteLine("  6. Number Guessing Game"); 
+            Console.WriteLine("  7. Quit"); 
             Console.Write("Select a choice from the menu: "); 
             _choice = Console.ReadLine();
             switch(_choice)
@@ -110,8 +111,13 @@ public class Program
                     RecordEvent();
                     break;
                 }
-                // choice 6. Quit  
                 case "6":
+                {
+                    NumberGuessGame();
+                    break;
+                }
+                // choice 7. Quit  
+                case "7":
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
@@ -222,7 +228,7 @@ public class Program
             string _LoadDescription = _parts[1];
             int _loadScore = int.Parse(_parts[2]);
             bool _loadCheck  =bool.Parse(_parts[3]);
-            if (_loadCheck)
+            if (_loadCheck == true)
             {         
                 Simple loadSimple = new Simple(_itemNo, "SimpleGoal",_Loadname, _LoadDescription, _loadScore, 1, _loadCheck);
                 return loadSimple;
@@ -284,9 +290,9 @@ public class Program
             string _LoadDescription = _parts[1];
             int _loadScore = int.Parse(_parts[2]);
             int _loadBonus = int.Parse(_parts[3]);
-            int _loadPerform = int.Parse(_parts[4]);
-            int _loadTime = int.Parse(_parts[5]);
-            CheckList CheckList = new CheckList(_itemNo, "EternalGoal",_Loadname, _LoadDescription, _loadScore, _loadPerform, _loadTime, _loadBonus);
+            int _loadTime = int.Parse(_parts[4]);
+            int _loadPerform = int.Parse(_parts[5]);
+            CheckList CheckList = new CheckList(_itemNo, "CheckListGoal",_Loadname, _LoadDescription, _loadScore, _loadPerform, _loadTime, _loadBonus);
             return CheckList;
         }
         else
@@ -323,7 +329,24 @@ public class Program
         {
             Console.WriteLine("Invalid goal index.");
         }
-
+    }
+    public static void NumberGuessGame()
+    {
+        NumberGuess numberGuess = new NumberGuess();
+        numberGuess.StartGame();
+        Console.WriteLine($"The winning number is: {numberGuess.RandomNumber()}");
+        if (numberGuess.PlayerNumber() == numberGuess.RandomNumber())
+        {
+            Console.WriteLine($"Congratulation! You guess it. You win {numberGuess.PlayerBet()} points.");
+            _grade += numberGuess.PlayerBet();
+            Console.WriteLine($"You now have {_grade} scores.");
+        }
+        else
+        {
+            Console.WriteLine($"Sorry! You guess it wrong. You loss {numberGuess.PlayerBet()} points."); 
+            _grade -= numberGuess.PlayerBet();
+            Console.WriteLine($"You now have {_grade} scores.");
+        }
     }
     
 }

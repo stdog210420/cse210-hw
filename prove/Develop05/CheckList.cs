@@ -24,6 +24,7 @@ public class CheckList:Goal
     }
     public CheckList(int itemNo, string type, string name, string description, int score, int perform, int time, int bonus):base(itemNo, type, name, description, score, perform)
     {   
+        _perform= perform;
         _time = time;
         _bonus = bonus;
     }
@@ -31,7 +32,7 @@ public class CheckList:Goal
     {
         if (CheckListPerform() < Time())
         {
-        return $"{ItemNo()}. [ ] {Name()} ({Description()}) -- Currently completed: {CheckListPerform()}/{Time()} ";            
+            return $"{ItemNo()}. [ ] {Name()} ({Description()}) -- Currently completed: {CheckListPerform()}/{Time()} ";            
         }
         else if (CheckListPerform() == Time())
         {
