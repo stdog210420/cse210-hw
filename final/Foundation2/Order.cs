@@ -32,7 +32,7 @@ class Order
     // }
     public double SumTotalPrice()
     {
-        double _shippingCost = 0;
+        double _shippingCost;
         double totalPrice = 0;
         if (_customer.IsInUSA())
         {

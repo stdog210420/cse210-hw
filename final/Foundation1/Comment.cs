@@ -15,10 +15,10 @@ class Comment
     {   
         return _text;
     }
-    public Comment(string _Name, string _Text)
+    public Comment(string name, string text)
     {
-        _name = _Name;
-        _text = _Text;
+        _name = name;
+        _text = text;
     }
 
 }
