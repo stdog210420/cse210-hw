@@ -45,7 +45,7 @@ using System.IO;
         public void LoadEntries(string fileName)
         {
             
-            Console.WriteLine("Display all journals from " + fileName + "：");  
+            Console.WriteLine(fileName + " Loaded.");  
             string[] _lines = File.ReadAllLines(fileName);
             foreach (string line in _lines)
             {
