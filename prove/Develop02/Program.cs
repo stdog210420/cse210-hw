@@ -32,7 +32,7 @@ class Program
                 // choice 2. Display
                 case "2":
                 {                
-                    myJournal.display();
+                    myJournal.displayEntries();
                     break;
                 }
                 // choice 3. Load  
@@ -42,14 +42,14 @@ class Program
                     Console.WriteLine("What is the filename? ");
                     _myFileName = Console.ReadLine() + ".txt";
                     // myJournal.ExistingEntries.saveToExisting();
-                    myJournal.displayEntries(_myFileName);
+                    myJournal.LoadEntries(_myFileName);
                     break;
                 }
                 // choice 4. Save  
                 // Save the text in a file
                 case "4":
                 {
-                    myJournal.SaveJournalEntries(_fileName);
+                    myJournal.SaveEntries(_fileName);
                     break;
                 }
                 // choice 5. Quit 

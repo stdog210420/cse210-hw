@@ -4,14 +4,32 @@ using System.Diagnostics.Contracts;
 using System.IO;
 
     //get the journal entry
-    public class Entry
+    class Entry
     {
-        public DateTime _Date;
-        public string _Prompt;
-        public string _Response;
+        private string _date;
+        private string _prompt;
+        private string _response;
+        public string Date()
+        {           
+            return _date;
+        }
+        public string Prompt()
+        {
+            return _prompt;
+        }
+        public string Response()
+        {
+            return _response;
+        }
+        public Entry(DateTime date, string prompt, string response)
+        {
+            _date = date.ToShortDateString();
+            _prompt = prompt;
+            _response = response;
+        }
         public string  formattedEntry()
         {
-            string _formattedEntry= $"{_Date.ToShortDateString()} - Prompt: {_Prompt} {_Response}\n";
+            string _formattedEntry= $"{Date()} - Prompt: {Prompt()} {Response()}\n";
             return _formattedEntry;
         } 
     }

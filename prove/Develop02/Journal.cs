@@ -5,18 +5,13 @@ using System.IO;
     public class Journal
     {
         //creat a list to store all entries
-        public List<Entry> _Entries = new List<Entry>();
-        public string _FileName;
-
-        //set an intialized value to Filename
-        public void Entry(string _fileName)
-        {
-            _FileName = _fileName;
-        }
+        private List<Entry> _entries = new List<Entry>();
+        private string _fileName;
+        private DateTime _date;
         public void WriteNewEntry()
         {
             // randomly choose a prompt
-            string[] _prompts = new string[]
+            List<string> _prompts = new List<string>
             {
                 "Who was the most interesting person you interacted with today?",
                 "What was the best part of your day?",
@@ -26,49 +21,49 @@ using System.IO;
             };
 
             Random _random = new Random();
-            string _randomPrompt = _prompts[_random.Next(_prompts.Length)];
+            string _randomPrompt = _prompts[_random.Next(_prompts.Count)];
 
             // show the prompt and let the users type their response
             Console.WriteLine(_randomPrompt);
             string _response = Console.ReadLine();
 
             // creat a new entry and add them to the journal
-            Entry _newEntry = new Entry
+            Entry _newEntry = new Entry(DateTime.Now, _randomPrompt, _response)
             {
-                _Date = DateTime.Now,
-                _Prompt = _randomPrompt,
-                _Response = _response
             };
 
-            _Entries.Add(_newEntry);
+            _entries.Add(_newEntry);
             Console.WriteLine("Entry saved successfully.");
         }  
-        public void display()
+        public void displayEntries()
         {        
             Console.WriteLine("Display all journals：");    
-            foreach (Entry entry in _Entries)
+            foreach (Entry entry in _entries)
             {
                 string _formatted = entry.formattedEntry();
                 Console.WriteLine($"{_formatted}\n");
             }
         } 
-        public void displayEntries(string _FileName)
+        public void LoadEntries(string fileName)
         {
             
-            Console.WriteLine("Display all journals from " + _FileName + "：");  
-            string[] _lines = System.IO.File.ReadAllLines(_FileName);
-            foreach (string entry in _lines)
+            Console.WriteLine("Display all journals from " + fileName + "：");  
+            string[] _lines = System.IO.File.ReadAllLines(fileName);
+            foreach (string line in _lines)
             {
-                string[] _parts = entry.Split(",");
-                foreach (string part in _parts)
+                //先將char轉換成string，再從string轉換到DateTime格式
+                DateTime _date =  DateTime.Parse(line[0].ToString());
+                string _prompt = line[1].ToString();
+                string _response = line[2].ToString();
+                Entry createEntry = new Entry(_date, _prompt, _response);
+                if (createEntry != null)
                 {
-                    Console.WriteLine(part);
+                    _entries.Add(createEntry);
                 }
-                // 將舊檔資料新增到 ExistingEntries 中
-                // _Entries.Add(_lines);
             }
         }
-        public void SaveJournalEntries(string _fileName)
+
+        public void SaveEntries(string _fileName)
         {
             // check if the user type a filename, if not, ask to type one.
             if (string.IsNullOrEmpty(_fileName))
@@ -81,7 +76,7 @@ using System.IO;
             using (StreamWriter outputFile = new StreamWriter(_fileName, true)) // 使用 true 參數表示追加模式
             {
                 // Write new entries into the file
-                foreach (Entry entry in _Entries)
+                foreach (Entry entry in _entries)
                 {
                     string _formatted = entry.formattedEntry();
                     outputFile.WriteLine(_formatted);
