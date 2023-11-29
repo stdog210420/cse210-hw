@@ -25,7 +25,7 @@ class Program
                 // choice 1. Write
                 case "1":
                 {
-                    myJournal.WriteNewEntry();
+                    myJournal.WriteEntry();
                     Console.WriteLine("Do you want to keep this entry? If yes, plese choose 4 to save.\n");
                     break;
                 }

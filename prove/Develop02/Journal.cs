@@ -6,7 +6,7 @@ using System.IO;
     {
         //creat a list to store all entries
         private List<Entry> _entries = new List<Entry>();
-        public void WriteNewEntry()
+        public void WriteEntry()
         {
             // randomly choose a prompt
             List<string> _prompts = new List<string>
@@ -46,41 +46,48 @@ using System.IO;
         {
             
             Console.WriteLine("Display all journals from " + fileName + "：");  
-            string[] _lines = System.IO.File.ReadAllLines(fileName);
+            string[] _lines = File.ReadAllLines(fileName);
             foreach (string line in _lines)
             {
-                string[] parts = line.Split(" - Prompt: ");
-                string entryDate = parts[0];
-                string entryData = parts[1];
-                //先將char轉換成string，再從string轉換到DateTime格式
-                if (DateTime.TryParse(entryDate, out DateTime _date))
+                if (string.IsNullOrWhiteSpace(line))
                 {
-                    // 轉換成功，現在 _date 包含有效的日期和時間
-                    Console.WriteLine($"Parsed date: {_date}");
                 }
                 else
                 {
-                    // 轉換失敗，日期格式無效
-                    Console.WriteLine("Invalid date format");
-                }                
-                // 将字符串分割成子字符串数组
-                string[] subparts = entryData.ToString().Split('?');
-                // 移除各个部分的前后空格
-                for (int i = 0; i < subparts.Length; i++)
-                {
-                    subparts[i] = subparts[i].Trim();
-                }
-                // 确保我们有足够的部分
-                if (subparts.Length == 2)
-                {
-                    string _prompt = subparts[0].ToString();
-                    string _response = subparts[1].ToString();
-                    Entry createEntry = new Entry(_date, _prompt, _response);
-                    if (createEntry != null)
+                    string[] parts = line.Split(" - Prompt: ");
+                    string entryDate = parts[0].Trim();
+                    string entryData = parts[1].Trim();
+                    //先將char轉換成string，再從string轉換到DateTime格式
+                    if (DateTime.TryParse(entryDate, out DateTime _date))
                     {
-                        _entries.Add(createEntry);
+                        // 轉換成功，現在 _date 包含有效的日期和時間
+                        // 将字符串分割成子字符串数组
+                        string[] subparts = entryData.ToString().Split('?');
+                        // 移除各个部分的前后空格
+                        for (int i = 0; i < subparts.Length; i++)
+                        {
+                            subparts[i] = subparts[i].Trim();
+                        }
+                        // 确保我们有足够的部分
+                        if (subparts.Length == 2)
+                        {
+                            string _prompt = subparts[0].ToString() + "?";
+                            string _response = subparts[1].ToString();
+                            Entry createEntry = new Entry(_date, _prompt, _response);
+                            if (createEntry != null)
+                            {
+                                _entries.Add(createEntry);
+                            }
+                        }
                     }
+                    else
+                    {
+                        // 轉換失敗，日期格式無效
+                        Console.WriteLine("Invalid date format");
+                    }        
                 }
+        
+
             }
         }
 
