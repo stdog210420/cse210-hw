@@ -33,15 +33,17 @@ using System.IO;
             _entries.Add(_newEntry);
             Console.WriteLine("Entry saved successfully.");
         }  
+
         public void displayEntries()
         {        
             Console.WriteLine("Display all journals：");    
             foreach (Entry entry in _entries)
             {
                 string _formatted = entry.formattedEntry();
-                Console.WriteLine($"{_formatted}\n");
+                Console.WriteLine($"{_formatted}");
             }
         } 
+
         public void LoadEntries(string fileName)
         {
             
@@ -86,8 +88,6 @@ using System.IO;
                         Console.WriteLine("Invalid date format");
                     }        
                 }
-        
-
             }
         }
 
@@ -101,7 +101,7 @@ using System.IO;
             }
 
             // Open the file in append mode, create it if it doesn't exist.
-            using (StreamWriter outputFile = new StreamWriter(_fileName, true)) // 使用 true 參數表示追加模式
+            using (StreamWriter outputFile = new StreamWriter(_fileName, false)) // 使用 false參數表示非追加模式
             {
                 // Write new entries into the file
                 foreach (Entry entry in _entries)
@@ -112,6 +112,7 @@ using System.IO;
             }
             Console.WriteLine("Entries saved successfully in " + _fileName);
         }
+
         public void DeleteEntryFromFile(string _fileName, string _entryToDelete)
         {
             // read file into memory
